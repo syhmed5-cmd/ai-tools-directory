@@ -226,6 +226,21 @@ main{
   padding:50px 10px;
   grid-column:1/-1;
 }
+  
+<div class="modal-overlay" id="tool-modal">
+  <div class="modal">
+    <button class="modal-close" id="close-modal">✕</button>
+    <div class="tool-icon" id="modal-icon">✨</div>
+    <h2 id="modal-name">Tool Name</h2>
+    <span class="tool-category" id="modal-category">Category</span>
+    <p id="modal-description"></p>
+    <a class="modal-link" id="modal-link"
+       href="#" target="_blank" rel="noopener noreferrer">
+       Visit Official Website ↗
+    </a>
+  </div>
+</div>
+
 footer{
   border-top:1px solid #302b45;
   padding:35px 20px;
@@ -330,7 +345,8 @@ function renderTools(){
  const grid=document.getElementById("tools-grid");
  grid.innerHTML="";
 
- filtered.forEach(tool=>{
+ 
+filtered.forEach(tool=>{
    const card=document.createElement("article");
    card.className="card";
    card.innerHTML=`
@@ -341,26 +357,41 @@ function renderTools(){
     <h3>${tool.name}</h3>
     <p>${tool.description}</p>
     <a class="visit" href="${tool.url}" target="_blank" rel="noopener noreferrer">Visit Website ↗</a>
+    <button class="details-btn" type="button">View Details</button>
    `;
+
+   card.querySelector(".details-btn").addEventListener("click",()=>{
+     document.getElementById("modal-icon").textContent=tool.icon;
+     document.getElementById("modal-name").textContent=tool.name;
+     document.getElementById("modal-category").textContent=tool.category;
+     document.getElementById("modal-description").textContent=tool.description;
+     document.getElementById("modal-link").href=tool.url;
+     document.getElementById("tool-modal").classList.add("open");
+   });
+
    grid.appendChild(card);
- });
-
- const empty=document.getElementById("empty");
- empty.style.display=filtered.length?"none":"block";
-}
-
-document.getElementById("search").addEventListener("input",renderTools);
-
-document.getElementById("categories").addEventListener("click",event=>{
- const button=event.target.closest("button[data-category]");
- if(!button)return;
-
- activeCategory=button.dataset.category;
- document.querySelectorAll(".category").forEach(item=>{
-   item.classList.toggle("active",item===button);
- });
- renderTools();
 });
+
+ renderTools(); 
+  
+const modal=document.getElementById("tool-modal");
+
+document.getElementById("close-modal").addEventListener("click",()=>{
+  modal.classList.remove("open");
+});
+
+modal.addEventListener("click",event=>{
+  if(event.target===modal){
+    modal.classList.remove("open");
+  }
+});
+
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){
+    modal.classList.remove("open");
+  }
+});
+
 
 renderTools();
 </script>
