@@ -3,83 +3,76 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Discover the best AI tools for writing, images, video, audio, coding and productivity.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0c0b1b">
-<title>AI Tools Directory | Discover the Best AI Tools</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Discover the best AI tools for writing, images, video, coding and productivity.">
+<title>AI Tools Directory PRO</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#0c0b1b;--surface:#19172e;--text:#f8f7ff;
---muted:#aaa5c0;--purple:#a477ff;--pink:#ed70c5;
+--bg:#0c0b1b;
+--surface:#19172e;
+--purple:#a477ff;
+--pink:#ed70c5;
+--text:#f8f7ff;
+--muted:#aaa5c0;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-button,input,textarea,select{font:inherit}
 a{text-decoration:none;color:inherit}
-nav{max-width:1180px;margin:auto;padding:23px 20px;display:flex;justify-content:space-between;align-items:center}
+button,input,textarea,select{font:inherit}
+nav{max-width:1180px;margin:auto;padding:22px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:21px;font-weight:800}
-.logo span,.gradient{
-background:linear-gradient(90deg,#a477ff,#ed70c5,#76baff);
--webkit-background-clip:text;color:transparent
-}
-.nav-links{display:flex;gap:22px;font-size:13px;color:#d2cce5}
-.hero{text-align:center;padding:85px 20px 60px;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;width:450px;height:450px;border-radius:50%;background:#783bff;filter:blur(150px);opacity:.22;top:-230px;left:calc(50% - 225px)}
+.logo span,.gradient{background:linear-gradient(90deg,#a477ff,#ed70c5,#76baff);-webkit-background-clip:text;color:transparent}
+.nav-links{display:flex;gap:20px;font-size:13px;color:#d2cce5}
+.hero{text-align:center;padding:80px 20px 60px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:420px;height:420px;background:#783bff;filter:blur(150px);opacity:.2;top:-230px;left:calc(50% - 210px);border-radius:50%}
 .hero-content{position:relative;max-width:850px;margin:auto}
 .eyebrow{display:inline-block;border:1px solid #59477d;background:#241936;padding:9px 15px;border-radius:30px;color:#d6baff;font-size:11px}
 h1{font-size:clamp(40px,7vw,68px);letter-spacing:-3px;line-height:1.1;margin:27px 0 18px}
 .hero p{color:var(--muted);max-width:600px;margin:auto;line-height:1.8;font-size:15px}
-.search-box{display:flex;max-width:590px;margin:32px auto 0;padding:7px;border:1px solid #39334f;background:#19172d;border-radius:14px}
+.search-box{display:flex;max-width:590px;margin:30px auto;padding:7px;border:1px solid #39334f;background:#19172d;border-radius:14px}
 .search-box input{flex:1;min-width:0;padding:13px;border:0;outline:0;color:white;background:transparent}
-.search-box button,.primary-btn{background:linear-gradient(110deg,#8459f5,#db6acb);color:white;border:0;border-radius:9px;padding:12px 18px;cursor:pointer}
-main{max-width:1180px;margin:auto;padding:25px 20px 75px}
-.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:24px}
-.section-heading h2{font-size:25px;margin:0}
+.search-box button,.primary{background:linear-gradient(110deg,#8459f5,#db6acb);color:white;border:0;border-radius:9px;padding:12px 18px;cursor:pointer}
+main{max-width:1180px;margin:auto;padding:25px 20px 65px}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.heading h2{font-size:25px;margin:0}
 .count{color:var(--muted);font-size:13px}
 .categories{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
 .category{border:1px solid #34304a;border-radius:30px;background:#17152a;color:#c7c3d9;padding:10px 16px;font-size:12px;cursor:pointer}
 .category.active,.category:hover{background:linear-gradient(110deg,#7955e8,#c45dbd);color:white;border-color:transparent}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:18px}
-.card{position:relative;padding:22px;border:1px solid #302b45;border-radius:18px;background:linear-gradient(145deg,#1b1831,#131224);transition:.25s}
-.card:hover{transform:translateY(-5px);border-color:#8763dc}
+.card{padding:22px;border:1px solid #302b45;border-radius:18px;background:linear-gradient(145deg,#1b1831,#131224);transition:.25s}
+.card:hover{transform:translateY(-4px);border-color:#8763dc}
 .card-top{display:flex;justify-content:space-between;align-items:center}
 .tool-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#6544b8,#d16cc6);font-size:23px}
 .tool-category{color:#c39dff;background:#30234b;padding:7px 10px;border-radius:20px;font-size:11px}
 .card h3{font-size:19px;margin:18px 0 8px}
 .card p{min-height:65px;color:var(--muted);font-size:13px;line-height:1.7}
-.card-actions{display:flex;gap:9px;margin-top:14px}
+.actions{display:flex;gap:9px;margin-top:14px}
 .details-btn,.favorite-btn{padding:11px;border-radius:9px;cursor:pointer;font-size:12px}
 .details-btn{flex:1;border:1px solid #7655c9;background:#292044;color:#d8c5ff}
-.details-btn:hover{background:linear-gradient(100deg,#7955e8,#c45dbd);color:white}
 .favorite-btn{border:1px solid #49405f;background:#302747;color:#aaa;font-size:17px}
 .favorite-btn.active{color:#ff75b5}
 .visit{display:inline-block;margin-top:15px;color:#bd9aff;font-size:13px;font-weight:600}
-.empty{display:none;grid-column:1/-1;padding:50px 10px;text-align:center;color:var(--muted)}
-/* Submit section */
-.submit-section{max-width:780px;margin:20px auto 70px;padding:35px 25px;border:1px solid #44345e;border-radius:22px;background:linear-gradient(145deg,#21183a,#17152a)}
+.empty{display:none;grid-column:1/-1;text-align:center;padding:45px;color:var(--muted)}
+.submit-section{max-width:780px;margin:25px auto 70px;padding:32px 25px;border:1px solid #44345e;border-radius:22px;background:linear-gradient(145deg,#21183a,#17152a)}
 .submit-section h2{font-size:27px;margin:0 0 12px}
 .submit-section>p{color:var(--muted);font-size:14px;line-height:1.7}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:25px}
-.form-field{display:flex;flex-direction:column;gap:8px}
-.form-field.full{grid-column:1/-1}
-.form-field label{font-size:13px;color:#ded8ed}
-.form-field input,.form-field select,.form-field textarea{
-width:100%;padding:13px;border:1px solid #403752;border-radius:10px;background:#111020;color:white;outline:none
-}
-.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#a477ff}
-.form-field textarea{min-height:100px;resize:vertical}
-.form-field option{background:#19172e}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;color:#ded8ed}
+.field input,.field select,.field textarea{width:100%;padding:13px;border:1px solid #403752;border-radius:10px;background:#111020;color:white;outline:0}
+.field textarea{min-height:100px;resize:vertical}
 .submit-button{width:100%;margin-top:20px;padding:14px;border:0;border-radius:10px;background:linear-gradient(100deg,#7955e8,#c45dbd);color:white;font-weight:700;cursor:pointer}
-.submit-button:disabled{opacity:.6;cursor:wait}
-.form-status{margin-top:15px;font-size:13px;line-height:1.6}
-.form-status.success{color:#7de0ad}
-.form-status.error{color:#ff8c9b}
-.hp-field{position:absolute;left:-5000px}
-/* Modal */
+.submit-button:disabled{opacity:.6}
+.status{margin-top:15px;font-size:13px;line-height:1.6}
+.success{color:#7de0ad}
+.error{color:#ff8c9b}
+.hp{position:absolute;left:-5000px}
 .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:#080713dd;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
 .modal{position:relative;width:100%;max-width:460px;background:#1b1831;border:1px solid #554273;border-radius:20px;padding:30px}
@@ -88,13 +81,12 @@ width:100%;padding:13px;border:1px solid #403752;border-radius:10px;background:#
 .modal p{color:#b8b2ce;line-height:1.8;font-size:14px}
 .modal-link{display:inline-block;margin-top:15px;padding:12px 19px;border-radius:10px;background:linear-gradient(100deg,#7955e8,#c45dbd);color:white;font-size:13px}
 footer{border-top:1px solid #302b45;text-align:center;padding:35px 20px;color:#9994ad;font-size:13px}
-footer strong{background:linear-gradient(90deg,#a477ff,#ed70c5);-webkit-background-clip:text;color:transparent}
 @media(max-width:600px){
-.hero{padding-top:60px}h1{letter-spacing:-2px}
-main{padding-left:16px;padding-right:16px}
+.hero{padding-top:60px}
+h1{letter-spacing:-2px}
 .grid{grid-template-columns:1fr}
 .form-grid{grid-template-columns:1fr}
-.form-field.full{grid-column:auto}
+.field.full{grid-column:auto}
 .nav-links{gap:10px;font-size:11px}
 }
 </style>
@@ -105,7 +97,7 @@ main{padding-left:16px;padding-right:16px}
 <a class="logo" href="#">✦ AI <span>Directory</span></a>
 <div class="nav-links">
 <a href="#explore">Explore</a>
-<a href="#submit">Submit a Tool</a>
+<a href="#submit">Suggest a Tool</a>
 </div>
 </nav>
 
@@ -113,7 +105,7 @@ main{padding-left:16px;padding-right:16px}
 <div class="hero-content">
 <span class="eyebrow">✦ YOUR GATEWAY TO ARTIFICIAL INTELLIGENCE</span>
 <h1>Discover the Best<br><span class="gradient">AI Tools</span> for Everything</h1>
-<p>Explore powerful artificial intelligence tools to create, learn, work and bring your ideas to life.</p>
+<p>Explore powerful AI tools to create, learn, work and bring your ideas to life.</p>
 <div class="search-box">
 <input id="search" type="search" placeholder="Search for AI tools..." aria-label="Search tools">
 <button id="search-button">Search</button>
@@ -122,11 +114,10 @@ main{padding-left:16px;padding-right:16px}
 </header>
 
 <main id="explore">
-<div class="section-heading">
+<div class="heading">
 <h2>Explore AI Tools</h2>
 <span class="count" id="count"></span>
 </div>
-
 <div class="categories" id="categories">
 <button class="category active" data-category="All">All Tools</button>
 <button class="category" data-category="Writing">Writing</button>
@@ -137,63 +128,47 @@ main{padding-left:16px;padding-right:16px}
 <button class="category" data-category="Productivity">Productivity</button>
 <button class="category" id="favorites-filter">♥ My Favorites</button>
 </div>
-
 <div class="grid" id="tools-grid"></div>
 <div class="empty" id="empty">No tools found. Try another search.</div>
 </main>
 
 <section class="submit-section" id="submit">
 <h2>Suggest an <span class="gradient">AI Tool</span></h2>
-<p>Know a useful AI tool? Share it with our community. Every suggestion is reviewed before being added to the directory.</p>
+<p>Know a useful AI tool? Share it with our community. Every suggestion is reviewed before being added.</p>
 
-<form id="suggestion-form" action="https://formspree.io/f/mwlowaab" method="POST">
+<form id="suggestion-form">
 <div class="form-grid">
-
-<div class="form-field">
+<div class="field">
 <label for="tool-name">Tool Name *</label>
 <input id="tool-name" name="tool_name" required maxlength="100" placeholder="e.g. ChatGPT">
 </div>
-
-<div class="form-field">
+<div class="field">
 <label for="tool-category">Category *</label>
 <select id="tool-category" name="category" required>
 <option value="">Choose a category</option>
-<option>Writing</option>
-<option>Image</option>
-<option>Video</option>
-<option>Audio</option>
-<option>Coding</option>
-<option>Productivity</option>
-<option>Other</option>
+<option>Writing</option><option>Image</option><option>Video</option>
+<option>Audio</option><option>Coding</option><option>Productivity</option><option>Other</option>
 </select>
 </div>
-
-<div class="form-field full">
+<div class="field full">
 <label for="tool-url">Official Website URL *</label>
 <input id="tool-url" name="website_url" type="url" required placeholder="https://example.com">
 </div>
-
-<div class="form-field full">
+<div class="field full">
 <label for="tool-description">Description *</label>
 <textarea id="tool-description" name="description" required maxlength="500" placeholder="What does this AI tool do?"></textarea>
 </div>
-
-<div class="form-field full">
+<div class="field full">
 <label for="submit-email">Your Email (Optional)</label>
-<input id="submit-email" name="email" type="email" placeholder="you@example.com">
+<input id="submit-email" name="submitter_email" type="email" placeholder="you@example.com">
 </div>
-
 </div>
-
-<div class="hp-field" aria-hidden="true">
-<label>Leave this field empty</label>
-<input name="_gotcha" tabindex="-1" autocomplete="off">
+<div class="hp" aria-hidden="true">
+<label>Leave empty</label>
+<input name="website_check" tabindex="-1" autocomplete="off">
 </div>
-
-<input type="hidden" name="_subject" value="New AI Tool Suggestion">
-
 <button class="submit-button" id="submit-button" type="submit">Submit Tool Suggestion ↗</button>
-<div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+<div class="status" id="form-status" role="status" aria-live="polite"></div>
 </form>
 </section>
 
@@ -211,11 +186,17 @@ main{padding-left:16px;padding-right:16px}
 <footer>
 <p>✦ <strong>AI Tools Directory</strong></p>
 <p>Discover. Explore. Create.</p>
-<p>© 2026 AI Tools Directory. Built for AI enthusiasts.</p>
+<p>© 2026 AI Tools Directory.</p>
 </footer>
 
 <script>
-const tools=[
+const SUPABASE_URL="https://zrigscrgobjsdlorceke.supabase.co";
+const SUPABASE_KEY="sb_publishable_vpMTi9Mc38V2GXCMMrXGkw_twCqyMNn";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const FORM_ENDPOINT="https://formspree.io/f/mwlowaab";
+
+const defaultTools=[
 {name:"ChatGPT",category:"Writing",icon:"✍️",description:"An AI assistant for writing, learning, brainstorming and everyday tasks.",url:"https://chatgpt.com"},
 {name:"Claude",category:"Writing",icon:"🧠",description:"An AI assistant for writing, analysis, coding and complex reasoning.",url:"https://claude.ai"},
 {name:"Gemini",category:"Writing",icon:"✨",description:"Google's AI assistant for ideas, research and creative work.",url:"https://gemini.google.com"},
@@ -236,24 +217,55 @@ const tools=[
 {name:"Notion AI",category:"Productivity",icon:"📝",description:"AI features for organizing information and working with notes.",url:"https://notion.so"}
 ];
 
-const grid=document.getElementById("tools-grid");
-const search=document.getElementById("search");
-const count=document.getElementById("count");
-const empty=document.getElementById("empty");
-const modal=document.getElementById("tool-modal");
-
+let tools=[...defaultTools];
 let activeCategory="All";
 let favoritesOnly=false;
 let favorites=[];
 
 try{
 const saved=JSON.parse(localStorage.getItem("ai-directory-favorites")||"[]");
-if(Array.isArray(saved))favorites=saved.filter(name=>tools.some(t=>t.name===name));
-}catch(error){favorites=[];}
+if(Array.isArray(saved))favorites=saved;
+}catch(e){favorites=[];}
+
+const grid=document.getElementById("tools-grid");
+const search=document.getElementById("search");
+const count=document.getElementById("count");
+const empty=document.getElementById("empty");
+const modal=document.getElementById("tool-modal");
 
 function saveFavorites(){
 try{localStorage.setItem("ai-directory-favorites",JSON.stringify(favorites));}
-catch(error){console.warn("Favorites could not be saved.");}
+catch(e){console.warn("Favorites could not be saved.");}
+}
+
+function normalizeTool(row){
+return {
+name:row.name,
+category:row.category,
+description:row.description,
+url:row.website_url,
+icon:"✨"
+};
+}
+
+async function loadTools(){
+try{
+const {data,error}=await supabaseClient
+.from("tools")
+.select("name,category,description,website_url")
+.eq("is_published",true);
+
+if(error)throw error;
+
+if(data && data.length){
+const dbTools=data.map(normalizeTool);
+const names=new Set(dbTools.map(t=>t.name.toLowerCase()));
+tools=[...dbTools,...defaultTools.filter(t=>!names.has(t.name.toLowerCase()))];
+}
+}catch(error){
+console.error("Supabase tools loading failed:",error);
+}
+renderTools();
 }
 
 function openDetails(tool){
@@ -299,7 +311,7 @@ const description=document.createElement("p");
 description.textContent=tool.description;
 
 const actions=document.createElement("div");
-actions.className="card-actions";
+actions.className="actions";
 
 const details=document.createElement("button");
 details.className="details-btn";
@@ -312,7 +324,6 @@ const isFavorite=favorites.includes(tool.name);
 favorite.classList.toggle("active",isFavorite);
 favorite.textContent=isFavorite?"♥":"♡";
 favorite.setAttribute("aria-label",isFavorite?"Remove from favorites":"Add to favorites");
-
 favorite.addEventListener("click",()=>{
 if(favorites.includes(tool.name)){
 favorites=favorites.filter(name=>name!==tool.name);
@@ -360,7 +371,7 @@ document.getElementById("close-modal").addEventListener("click",()=>modal.classL
 modal.addEventListener("click",event=>{if(event.target===modal)modal.classList.remove("open");});
 document.addEventListener("keydown",event=>{if(event.key==="Escape")modal.classList.remove("open");});
 
-/* Formspree submission */
+/* Save suggestions to Supabase */
 const form=document.getElementById("suggestion-form");
 const status=document.getElementById("form-status");
 const submitButton=document.getElementById("submit-button");
@@ -368,32 +379,53 @@ const submitButton=document.getElementById("submit-button");
 form.addEventListener("submit",async event=>{
 event.preventDefault();
 status.textContent="";
-status.className="form-status";
+status.className="status";
 
 if(!form.reportValidity())return;
+
+const values=new FormData(form);
+const name=String(values.get("tool_name")||"").trim();
+const category=String(values.get("category")||"").trim();
+const website=String(values.get("website_url")||"").trim();
+const description=String(values.get("description")||"").trim();
+const email=String(values.get("submitter_email")||"").trim();
+
+if(!name||!category||!website||!description)return;
+
+let parsedUrl;
+try{
+parsedUrl=new URL(website);
+if(!["http:","https:"].includes(parsedUrl.protocol))throw new Error();
+}catch(e){
+status.textContent="Please enter a valid website URL.";
+status.classList.add("error");
+return;
+}
 
 submitButton.disabled=true;
 submitButton.textContent="Submitting...";
 
 try{
-const response=await fetch(form.action,{
-method:"POST",
-body:new FormData(form),
-headers:{Accept:"application/json"}
+const {error}=await supabaseClient
+.from("tool_suggestions")
+.insert({
+tool_name:name,
+category:category,
+website_url:parsedUrl.href,
+description:description,
+submitter_email:email||null,
+status:"pending"
 });
 
-if(response.ok){
-status.textContent="Thank you! Your suggestion has been submitted successfully and will be reviewed.";
+if(error)throw error;
+
+status.textContent="Thank you! Your suggestion has been received and is awaiting review.";
 status.classList.add("success");
 form.reset();
-}else{
-const result=await response.json().catch(()=>null);
-throw new Error(result?.errors?.map(e=>e.message).join(", ")||"Submission failed. Please try again.");
-}
+
 }catch(error){
-status.textContent=error.message==="Failed to fetch"
-?"Unable to connect. Please check your internet connection and try again."
-:error.message;
+console.error("Supabase submission error:",error);
+status.textContent="We couldn't save your suggestion. Please try again later or contact us.";
 status.classList.add("error");
 }finally{
 submitButton.disabled=false;
@@ -402,6 +434,7 @@ submitButton.textContent="Submit Tool Suggestion ↗";
 });
 
 renderTools();
+loadTools();
 </script>
 </body>
 </html>
