@@ -3,379 +3,219 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Discover the best AI tools for writing, image generation, video, audio, coding and productivity.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Discover the best AI tools for writing, images, video, audio, coding and productivity.">
 <meta name="theme-color" content="#0c0b1b">
-<title>AI Tools Directory — Discover AI</title>
+<title>AI Tools Directory | Discover the Best AI Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 :root{
-  --bg:#0c0b1b;
-  --surface:#19172e;
-  --text:#f8f7ff;
-  --muted:#aaa5c0;
-  --purple:#a477ff;
-  --pink:#ed70c5;
-  --blue:#76baff;
+--bg:#0c0b1b;--surface:#19172e;--text:#f8f7ff;
+--muted:#aaa5c0;--purple:#a477ff;--pink:#ed70c5;
 }
-
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-}
-button,input{font:inherit}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+button,input,textarea,select{font:inherit}
 a{text-decoration:none;color:inherit}
-
-nav{
-  max-width:1180px;
-  margin:auto;
-  padding:23px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+nav{max-width:1180px;margin:auto;padding:23px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:21px;font-weight:800}
-.logo span{
-  background:linear-gradient(90deg,var(--purple),var(--pink));
-  -webkit-background-clip:text;
-  color:transparent;
+.logo span,.gradient{
+background:linear-gradient(90deg,#a477ff,#ed70c5,#76baff);
+-webkit-background-clip:text;color:transparent
 }
-.nav-link{color:#d2cce5;font-size:13px}
-
-.hero{
-  text-align:center;
-  padding:85px 20px 60px;
-  position:relative;
-  overflow:hidden;
-}
-.hero:before{
-  content:"";
-  position:absolute;
-  width:450px;height:450px;
-  border-radius:50%;
-  background:#783bff;
-  filter:blur(150px);
-  opacity:.22;
-  top:-230px;
-  left:calc(50% - 225px);
-}
+.nav-links{display:flex;gap:22px;font-size:13px;color:#d2cce5}
+.hero{text-align:center;padding:85px 20px 60px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:450px;height:450px;border-radius:50%;background:#783bff;filter:blur(150px);opacity:.22;top:-230px;left:calc(50% - 225px)}
 .hero-content{position:relative;max-width:850px;margin:auto}
-.eyebrow{
-  display:inline-block;
-  border:1px solid #59477d;
-  background:#241936;
-  padding:9px 15px;
-  border-radius:30px;
-  color:#d6baff;
-  font-size:11px;
-}
-h1{
-  font-size:clamp(40px,7vw,68px);
-  letter-spacing:-3px;
-  line-height:1.1;
-  margin:27px 0 18px;
-}
-.gradient{
-  background:linear-gradient(90deg,#a477ff,#ed70c5,#76baff);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-.hero p{
-  color:var(--muted);
-  max-width:600px;
-  margin:auto;
-  line-height:1.8;
-  font-size:15px;
-}
-.search-box{
-  display:flex;
-  max-width:590px;
-  margin:32px auto 0;
-  padding:7px;
-  border:1px solid #39334f;
-  background:#19172d;
-  border-radius:14px;
-}
-.search-box input{
-  flex:1;
-  min-width:0;
-  padding:13px;
-  border:0;
-  outline:0;
-  color:white;
-  background:transparent;
-}
-.search-box input::placeholder{color:#817c9b}
-.search-box button{
-  background:linear-gradient(110deg,#8459f5,#db6acb);
-  color:white;
-  border:0;
-  border-radius:9px;
-  padding:0 18px;
-  cursor:pointer;
-}
-
-main{
-  max-width:1180px;
-  margin:auto;
-  padding:25px 20px 75px;
-}
-.section-heading{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:24px;
-}
+.eyebrow{display:inline-block;border:1px solid #59477d;background:#241936;padding:9px 15px;border-radius:30px;color:#d6baff;font-size:11px}
+h1{font-size:clamp(40px,7vw,68px);letter-spacing:-3px;line-height:1.1;margin:27px 0 18px}
+.hero p{color:var(--muted);max-width:600px;margin:auto;line-height:1.8;font-size:15px}
+.search-box{display:flex;max-width:590px;margin:32px auto 0;padding:7px;border:1px solid #39334f;background:#19172d;border-radius:14px}
+.search-box input{flex:1;min-width:0;padding:13px;border:0;outline:0;color:white;background:transparent}
+.search-box button,.primary-btn{background:linear-gradient(110deg,#8459f5,#db6acb);color:white;border:0;border-radius:9px;padding:12px 18px;cursor:pointer}
+main{max-width:1180px;margin:auto;padding:25px 20px 75px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:24px}
 .section-heading h2{font-size:25px;margin:0}
 .count{color:var(--muted);font-size:13px}
-
-.categories{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:28px;
-}
-.category{
-  border:1px solid #34304a;
-  border-radius:30px;
-  background:#17152a;
-  color:#c7c3d9;
-  padding:10px 16px;
-  font-size:12px;
-  cursor:pointer;
-}
-.category.active,.category:hover{
-  background:linear-gradient(110deg,#7955e8,#c45dbd);
-  color:white;
-  border-color:transparent;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(245px,1fr));
-  gap:18px;
-}
-.card{
-  position:relative;
-  padding:22px;
-  border:1px solid #302b45;
-  border-radius:18px;
-  background:linear-gradient(145deg,#1b1831,#131224);
-  transition:.25s;
-}
-.card:hover{
-  transform:translateY(-5px);
-  border-color:#8763dc;
-}
-.card-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.tool-icon{
-  width:48px;height:48px;
-  display:grid;
-  place-items:center;
-  border-radius:14px;
-  background:linear-gradient(135deg,#6544b8,#d16cc6);
-  font-size:23px;
-}
-.tool-category{
-  color:#c39dff;
-  background:#30234b;
-  padding:7px 10px;
-  border-radius:20px;
-  font-size:11px;
-}
+.categories{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.category{border:1px solid #34304a;border-radius:30px;background:#17152a;color:#c7c3d9;padding:10px 16px;font-size:12px;cursor:pointer}
+.category.active,.category:hover{background:linear-gradient(110deg,#7955e8,#c45dbd);color:white;border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:18px}
+.card{position:relative;padding:22px;border:1px solid #302b45;border-radius:18px;background:linear-gradient(145deg,#1b1831,#131224);transition:.25s}
+.card:hover{transform:translateY(-5px);border-color:#8763dc}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.tool-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#6544b8,#d16cc6);font-size:23px}
+.tool-category{color:#c39dff;background:#30234b;padding:7px 10px;border-radius:20px;font-size:11px}
 .card h3{font-size:19px;margin:18px 0 8px}
-.card p{
-  min-height:65px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-}
-.card-actions{
-  display:flex;
-  gap:9px;
-  margin-top:14px;
-}
-.details-btn,.favorite-btn{
-  padding:11px;
-  border-radius:9px;
-  cursor:pointer;
-  font-size:12px;
-}
-.details-btn{
-  flex:1;
-  border:1px solid #7655c9;
-  background:#292044;
-  color:#d8c5ff;
-}
-.details-btn:hover{
-  background:linear-gradient(100deg,#7955e8,#c45dbd);
-  color:white;
-}
-.favorite-btn{
-  border:1px solid #49405f;
-  background:#302747;
-  color:#aaa;
-  font-size:17px;
-}
+.card p{min-height:65px;color:var(--muted);font-size:13px;line-height:1.7}
+.card-actions{display:flex;gap:9px;margin-top:14px}
+.details-btn,.favorite-btn{padding:11px;border-radius:9px;cursor:pointer;font-size:12px}
+.details-btn{flex:1;border:1px solid #7655c9;background:#292044;color:#d8c5ff}
+.details-btn:hover{background:linear-gradient(100deg,#7955e8,#c45dbd);color:white}
+.favorite-btn{border:1px solid #49405f;background:#302747;color:#aaa;font-size:17px}
 .favorite-btn.active{color:#ff75b5}
-.visit{
-  display:inline-block;
-  margin-top:15px;
-  color:#bd9aff;
-  font-size:13px;
-  font-weight:600;
+.visit{display:inline-block;margin-top:15px;color:#bd9aff;font-size:13px;font-weight:600}
+.empty{display:none;grid-column:1/-1;padding:50px 10px;text-align:center;color:var(--muted)}
+/* Submit section */
+.submit-section{max-width:780px;margin:20px auto 70px;padding:35px 25px;border:1px solid #44345e;border-radius:22px;background:linear-gradient(145deg,#21183a,#17152a)}
+.submit-section h2{font-size:27px;margin:0 0 12px}
+.submit-section>p{color:var(--muted);font-size:14px;line-height:1.7}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:25px}
+.form-field{display:flex;flex-direction:column;gap:8px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:13px;color:#ded8ed}
+.form-field input,.form-field select,.form-field textarea{
+width:100%;padding:13px;border:1px solid #403752;border-radius:10px;background:#111020;color:white;outline:none
 }
-.empty{
-  display:none;
-  grid-column:1/-1;
-  padding:50px 10px;
-  text-align:center;
-  color:var(--muted);
-}
-
-/* Details modal */
-.modal-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  background:#080713dd;
-  backdrop-filter:blur(8px);
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#a477ff}
+.form-field textarea{min-height:100px;resize:vertical}
+.form-field option{background:#19172e}
+.submit-button{width:100%;margin-top:20px;padding:14px;border:0;border-radius:10px;background:linear-gradient(100deg,#7955e8,#c45dbd);color:white;font-weight:700;cursor:pointer}
+.submit-button:disabled{opacity:.6;cursor:wait}
+.form-status{margin-top:15px;font-size:13px;line-height:1.6}
+.form-status.success{color:#7de0ad}
+.form-status.error{color:#ff8c9b}
+.hp-field{position:absolute;left:-5000px}
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:#080713dd;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
-.modal{
-  position:relative;
-  width:100%;
-  max-width:460px;
-  background:#1b1831;
-  border:1px solid #554273;
-  border-radius:20px;
-  padding:30px;
-  animation:appear .2s ease;
-}
-@keyframes appear{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.modal-close{
-  position:absolute;
-  top:15px;
-  right:15px;
-  border:0;
-  background:#302747;
-  color:white;
-  border-radius:8px;
-  padding:9px 12px;
-  cursor:pointer;
-}
+.modal{position:relative;width:100%;max-width:460px;background:#1b1831;border:1px solid #554273;border-radius:20px;padding:30px}
+.modal-close{position:absolute;top:15px;right:15px;border:0;background:#302747;color:white;border-radius:8px;padding:9px 12px;cursor:pointer}
 .modal h2{margin:20px 0 10px}
 .modal p{color:#b8b2ce;line-height:1.8;font-size:14px}
-.modal-link{
-  display:inline-block;
-  margin-top:15px;
-  padding:12px 19px;
-  border-radius:10px;
-  background:linear-gradient(100deg,#7955e8,#c45dbd);
-  color:white;
-  font-size:13px;
-}
-
-footer{
-  border-top:1px solid #302b45;
-  text-align:center;
-  padding:35px 20px;
-  color:#9994ad;
-  font-size:13px;
-}
-footer strong{
-  background:linear-gradient(90deg,#a477ff,#ed70c5);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
+.modal-link{display:inline-block;margin-top:15px;padding:12px 19px;border-radius:10px;background:linear-gradient(100deg,#7955e8,#c45dbd);color:white;font-size:13px}
+footer{border-top:1px solid #302b45;text-align:center;padding:35px 20px;color:#9994ad;font-size:13px}
+footer strong{background:linear-gradient(90deg,#a477ff,#ed70c5);-webkit-background-clip:text;color:transparent}
 @media(max-width:600px){
-  .hero{padding-top:60px}
-  h1{letter-spacing:-2px}
-  main{padding-left:16px;padding-right:16px}
-  .grid{grid-template-columns:1fr}
-  .modal{padding:24px}
+.hero{padding-top:60px}h1{letter-spacing:-2px}
+main{padding-left:16px;padding-right:16px}
+.grid{grid-template-columns:1fr}
+.form-grid{grid-template-columns:1fr}
+.form-field.full{grid-column:auto}
+.nav-links{gap:10px;font-size:11px}
 }
 </style>
 </head>
 
 <body>
-
 <nav>
-  <a class="logo" href="#">✦ AI <span>Directory</span></a>
-  <a class="nav-link" href="#explore">Explore Tools ↗</a>
+<a class="logo" href="#">✦ AI <span>Directory</span></a>
+<div class="nav-links">
+<a href="#explore">Explore</a>
+<a href="#submit">Submit a Tool</a>
+</div>
 </nav>
 
 <header class="hero">
-  <div class="hero-content">
-    <span class="eyebrow">✦ YOUR GATEWAY TO ARTIFICIAL INTELLIGENCE</span>
-    <h1>Discover the Best<br><span class="gradient">AI Tools</span> for Everything</h1>
-    <p>Explore powerful artificial intelligence tools to create, learn, work and bring your ideas to life.</p>
-    <div class="search-box">
-      <input id="search" type="search" placeholder="Search for AI tools...">
-      <button id="search-button">Search</button>
-    </div>
-  </div>
+<div class="hero-content">
+<span class="eyebrow">✦ YOUR GATEWAY TO ARTIFICIAL INTELLIGENCE</span>
+<h1>Discover the Best<br><span class="gradient">AI Tools</span> for Everything</h1>
+<p>Explore powerful artificial intelligence tools to create, learn, work and bring your ideas to life.</p>
+<div class="search-box">
+<input id="search" type="search" placeholder="Search for AI tools..." aria-label="Search tools">
+<button id="search-button">Search</button>
+</div>
+</div>
 </header>
 
 <main id="explore">
-  <div class="section-heading">
-    <h2>Explore AI Tools</h2>
-    <span class="count" id="count"></span>
-  </div>
+<div class="section-heading">
+<h2>Explore AI Tools</h2>
+<span class="count" id="count"></span>
+</div>
 
-  <div class="categories" id="categories">
-    <button class="category active" data-category="All">All Tools</button>
-    <button class="category" data-category="Writing">Writing</button>
-    <button class="category" data-category="Image">Image</button>
-    <button class="category" data-category="Video">Video</button>
-    <button class="category" data-category="Audio">Audio</button>
-    <button class="category" data-category="Coding">Coding</button>
-    <button class="category" data-category="Productivity">Productivity</button>
-    <button class="category" id="favorites-filter">♥ My Favorites</button>
-  </div>
+<div class="categories" id="categories">
+<button class="category active" data-category="All">All Tools</button>
+<button class="category" data-category="Writing">Writing</button>
+<button class="category" data-category="Image">Image</button>
+<button class="category" data-category="Video">Video</button>
+<button class="category" data-category="Audio">Audio</button>
+<button class="category" data-category="Coding">Coding</button>
+<button class="category" data-category="Productivity">Productivity</button>
+<button class="category" id="favorites-filter">♥ My Favorites</button>
+</div>
 
-  <div class="grid" id="tools-grid"></div>
-  <div class="empty" id="empty">No tools found. Try another search.</div>
+<div class="grid" id="tools-grid"></div>
+<div class="empty" id="empty">No tools found. Try another search.</div>
 </main>
 
+<section class="submit-section" id="submit">
+<h2>Suggest an <span class="gradient">AI Tool</span></h2>
+<p>Know a useful AI tool? Share it with our community. Every suggestion is reviewed before being added to the directory.</p>
+
+<form id="suggestion-form" action="https://formspree.io/f/mwlowaab" method="POST">
+<div class="form-grid">
+
+<div class="form-field">
+<label for="tool-name">Tool Name *</label>
+<input id="tool-name" name="tool_name" required maxlength="100" placeholder="e.g. ChatGPT">
+</div>
+
+<div class="form-field">
+<label for="tool-category">Category *</label>
+<select id="tool-category" name="category" required>
+<option value="">Choose a category</option>
+<option>Writing</option>
+<option>Image</option>
+<option>Video</option>
+<option>Audio</option>
+<option>Coding</option>
+<option>Productivity</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="form-field full">
+<label for="tool-url">Official Website URL *</label>
+<input id="tool-url" name="website_url" type="url" required placeholder="https://example.com">
+</div>
+
+<div class="form-field full">
+<label for="tool-description">Description *</label>
+<textarea id="tool-description" name="description" required maxlength="500" placeholder="What does this AI tool do?"></textarea>
+</div>
+
+<div class="form-field full">
+<label for="submit-email">Your Email (Optional)</label>
+<input id="submit-email" name="email" type="email" placeholder="you@example.com">
+</div>
+
+</div>
+
+<div class="hp-field" aria-hidden="true">
+<label>Leave this field empty</label>
+<input name="_gotcha" tabindex="-1" autocomplete="off">
+</div>
+
+<input type="hidden" name="_subject" value="New AI Tool Suggestion">
+
+<button class="submit-button" id="submit-button" type="submit">Submit Tool Suggestion ↗</button>
+<div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+</form>
+</section>
+
 <div class="modal-overlay" id="tool-modal">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
-    <button class="modal-close" id="close-modal" aria-label="Close">✕</button>
-    <div class="tool-icon" id="modal-icon">✨</div>
-    <h2 id="modal-name">Tool Name</h2>
-    <span class="tool-category" id="modal-category">Category</span>
-    <p id="modal-description"></p>
-    <a class="modal-link" id="modal-link" href="#" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
-  </div>
+<div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+<button class="modal-close" id="close-modal" aria-label="Close">✕</button>
+<div class="tool-icon" id="modal-icon">✨</div>
+<h2 id="modal-name">Tool Name</h2>
+<span class="tool-category" id="modal-category">Category</span>
+<p id="modal-description"></p>
+<a class="modal-link" id="modal-link" href="#" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+</div>
 </div>
 
 <footer>
-  <p>✦ <strong>AI Tools Directory</strong></p>
-  <p>Discover. Explore. Create.</p>
-  <p>© 2026 AI Tools Directory. Built for AI enthusiasts.</p>
+<p>✦ <strong>AI Tools Directory</strong></p>
+<p>Discover. Explore. Create.</p>
+<p>© 2026 AI Tools Directory. Built for AI enthusiasts.</p>
 </footer>
 
 <script>
-const tools = [
+const tools=[
 {name:"ChatGPT",category:"Writing",icon:"✍️",description:"An AI assistant for writing, learning, brainstorming and everyday tasks.",url:"https://chatgpt.com"},
 {name:"Claude",category:"Writing",icon:"🧠",description:"An AI assistant for writing, analysis, coding and complex reasoning.",url:"https://claude.ai"},
 {name:"Gemini",category:"Writing",icon:"✨",description:"Google's AI assistant for ideas, research and creative work.",url:"https://gemini.google.com"},
@@ -407,146 +247,158 @@ let favoritesOnly=false;
 let favorites=[];
 
 try{
-  const saved=JSON.parse(localStorage.getItem("ai-directory-favorites")||"[]");
-  if(Array.isArray(saved)) favorites=saved.filter(name=>tools.some(t=>t.name===name));
-}catch(error){
-  favorites=[];
-}
+const saved=JSON.parse(localStorage.getItem("ai-directory-favorites")||"[]");
+if(Array.isArray(saved))favorites=saved.filter(name=>tools.some(t=>t.name===name));
+}catch(error){favorites=[];}
 
 function saveFavorites(){
-  try{
-    localStorage.setItem("ai-directory-favorites",JSON.stringify(favorites));
-  }catch(error){
-    console.warn("Favorites could not be saved.");
-  }
+try{localStorage.setItem("ai-directory-favorites",JSON.stringify(favorites));}
+catch(error){console.warn("Favorites could not be saved.");}
 }
 
 function openDetails(tool){
-  document.getElementById("modal-icon").textContent=tool.icon;
-  document.getElementById("modal-name").textContent=tool.name;
-  document.getElementById("modal-category").textContent=tool.category;
-  document.getElementById("modal-description").textContent=tool.description;
-  document.getElementById("modal-link").href=tool.url;
-  modal.classList.add("open");
-  document.getElementById("close-modal").focus();
+document.getElementById("modal-icon").textContent=tool.icon;
+document.getElementById("modal-name").textContent=tool.name;
+document.getElementById("modal-category").textContent=tool.category;
+document.getElementById("modal-description").textContent=tool.description;
+document.getElementById("modal-link").href=tool.url;
+modal.classList.add("open");
+document.getElementById("close-modal").focus();
 }
 
 function renderTools(){
-  const query=search.value.toLowerCase().trim();
+const query=search.value.toLowerCase().trim();
+const filtered=tools.filter(tool=>{
+const matchesSearch=(tool.name+" "+tool.description+" "+tool.category).toLowerCase().includes(query);
+const matchesCategory=activeCategory==="All"||tool.category===activeCategory;
+const matchesFavorites=!favoritesOnly||favorites.includes(tool.name);
+return matchesSearch&&matchesCategory&&matchesFavorites;
+});
 
-  const filtered=tools.filter(tool=>{
-    const matchesSearch=(tool.name+" "+tool.description+" "+tool.category).toLowerCase().includes(query);
-    const matchesCategory=activeCategory==="All"||tool.category===activeCategory;
-    const matchesFavorites=!favoritesOnly||favorites.includes(tool.name);
-    return matchesSearch&&matchesCategory&&matchesFavorites;
-  });
+grid.replaceChildren();
+count.textContent=filtered.length+" tools available";
+empty.style.display=filtered.length?"none":"block";
 
-  grid.replaceChildren();
-  count.textContent=filtered.length+" tools available";
-  empty.style.display=filtered.length?"none":"block";
+filtered.forEach(tool=>{
+const card=document.createElement("article");
+card.className="card";
 
-  filtered.forEach(tool=>{
-    const card=document.createElement("article");
-    card.className="card";
+const top=document.createElement("div");
+top.className="card-top";
+const icon=document.createElement("div");
+icon.className="tool-icon";
+icon.textContent=tool.icon;
+const category=document.createElement("span");
+category.className="tool-category";
+category.textContent=tool.category;
+top.append(icon,category);
 
-    const top=document.createElement("div");
-    top.className="card-top";
+const title=document.createElement("h3");
+title.textContent=tool.name;
+const description=document.createElement("p");
+description.textContent=tool.description;
 
-    const icon=document.createElement("div");
-    icon.className="tool-icon";
-    icon.textContent=tool.icon;
+const actions=document.createElement("div");
+actions.className="card-actions";
 
-    const category=document.createElement("span");
-    category.className="tool-category";
-    category.textContent=tool.category;
+const details=document.createElement("button");
+details.className="details-btn";
+details.textContent="View Details";
+details.addEventListener("click",()=>openDetails(tool));
 
-    top.append(icon,category);
+const favorite=document.createElement("button");
+favorite.className="favorite-btn";
+const isFavorite=favorites.includes(tool.name);
+favorite.classList.toggle("active",isFavorite);
+favorite.textContent=isFavorite?"♥":"♡";
+favorite.setAttribute("aria-label",isFavorite?"Remove from favorites":"Add to favorites");
 
-    const title=document.createElement("h3");
-    title.textContent=tool.name;
+favorite.addEventListener("click",()=>{
+if(favorites.includes(tool.name)){
+favorites=favorites.filter(name=>name!==tool.name);
+}else{favorites.push(tool.name);}
+saveFavorites();
+renderTools();
+});
 
-    const description=document.createElement("p");
-    description.textContent=tool.description;
+actions.append(details,favorite);
 
-    const actions=document.createElement("div");
-    actions.className="card-actions";
+const link=document.createElement("a");
+link.className="visit";
+link.href=tool.url;
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent="Visit Website ↗";
 
-    const details=document.createElement("button");
-    details.className="details-btn";
-    details.textContent="View Details";
-    details.addEventListener("click",()=>openDetails(tool));
-
-    const favorite=document.createElement("button");
-    favorite.className="favorite-btn";
-    const isFavorite=favorites.includes(tool.name);
-    favorite.classList.toggle("active",isFavorite);
-    favorite.textContent=isFavorite?"♥":"♡";
-    favorite.setAttribute("aria-label",isFavorite?"Remove from favorites":"Add to favorites");
-
-    favorite.addEventListener("click",()=>{
-      if(favorites.includes(tool.name)){
-        favorites=favorites.filter(name=>name!==tool.name);
-      }else{
-        favorites.push(tool.name);
-      }
-      saveFavorites();
-      renderTools();
-    });
-
-    actions.append(details,favorite);
-
-    const link=document.createElement("a");
-    link.className="visit";
-    link.href=tool.url;
-    link.target="_blank";
-    link.rel="noopener noreferrer";
-    link.textContent="Visit Website ↗";
-
-    card.append(top,title,description,actions,link);
-    grid.appendChild(card);
-  });
+card.append(top,title,description,actions,link);
+grid.appendChild(card);
+});
 }
 
 document.getElementById("categories").addEventListener("click",event=>{
-  const button=event.target.closest("button[data-category]");
-  if(!button)return;
-
-  activeCategory=button.dataset.category;
-  favoritesOnly=false;
-
-  document.querySelectorAll(".category").forEach(item=>{
-    item.classList.toggle("active",item===button);
-  });
-
-  document.getElementById("favorites-filter").classList.remove("active");
-  renderTools();
+const button=event.target.closest("button[data-category]");
+if(!button)return;
+activeCategory=button.dataset.category;
+favoritesOnly=false;
+document.querySelectorAll(".category").forEach(item=>item.classList.toggle("active",item===button));
+document.getElementById("favorites-filter").classList.remove("active");
+renderTools();
 });
 
 document.getElementById("favorites-filter").addEventListener("click",()=>{
-  favoritesOnly=!favoritesOnly;
-  activeCategory="All";
-
-  document.querySelectorAll(".category[data-category]").forEach(item=>{
-    item.classList.toggle("active",item.dataset.category==="All");
-  });
-
-  document.getElementById("favorites-filter").classList.toggle("active",favoritesOnly);
-  renderTools();
+favoritesOnly=!favoritesOnly;
+activeCategory="All";
+document.querySelectorAll(".category[data-category]").forEach(item=>item.classList.toggle("active",item.dataset.category==="All"));
+document.getElementById("favorites-filter").classList.toggle("active",favoritesOnly);
+renderTools();
 });
 
 search.addEventListener("input",renderTools);
 document.getElementById("search-button").addEventListener("click",renderTools);
 
-document.getElementById("close-modal").addEventListener("click",()=>{
-  modal.classList.remove("open");
+document.getElementById("close-modal").addEventListener("click",()=>modal.classList.remove("open"));
+modal.addEventListener("click",event=>{if(event.target===modal)modal.classList.remove("open");});
+document.addEventListener("keydown",event=>{if(event.key==="Escape")modal.classList.remove("open");});
+
+/* Formspree submission */
+const form=document.getElementById("suggestion-form");
+const status=document.getElementById("form-status");
+const submitButton=document.getElementById("submit-button");
+
+form.addEventListener("submit",async event=>{
+event.preventDefault();
+status.textContent="";
+status.className="form-status";
+
+if(!form.reportValidity())return;
+
+submitButton.disabled=true;
+submitButton.textContent="Submitting...";
+
+try{
+const response=await fetch(form.action,{
+method:"POST",
+body:new FormData(form),
+headers:{Accept:"application/json"}
 });
 
-modal.addEventListener("click",event=>{
-  if(event.target===modal)modal.classList.remove("open");
-});
-
-document.addEventListener("keydown",event=>{
-  if(event.key==="Escape")modal.classList.remove("open");
+if(response.ok){
+status.textContent="Thank you! Your suggestion has been submitted successfully and will be reviewed.";
+status.classList.add("success");
+form.reset();
+}else{
+const result=await response.json().catch(()=>null);
+throw new Error(result?.errors?.map(e=>e.message).join(", ")||"Submission failed. Please try again.");
+}
+}catch(error){
+status.textContent=error.message==="Failed to fetch"
+?"Unable to connect. Please check your internet connection and try again."
+:error.message;
+status.classList.add("error");
+}finally{
+submitButton.disabled=false;
+submitButton.textContent="Submit Tool Suggestion ↗";
+}
 });
 
 renderTools();
