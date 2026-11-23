@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tools Directory</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:65px 20px 35px}
+h1{font-size:42px;margin:0 0 15px}
+header p{color:#aab2c5}
+input,select{padding:15px;border-radius:10px;border:1px solid #303a50;background:#151d32;color:white;width:100%;max-width:500px}
+main{max-width:1100px;margin:auto;padding:25px}
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px}
+.filters select{max-width:220px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:#151d32;border:1px solid #28334c;border-radius:15px;padding:22px}
+.card h3{margin-top:0}
+.card p{color:#aab2c5;line-height:1.5}
+.tag{color:#9b8cff;font-size:13px}
+.card a{color:#8da7ff;text-decoration:none}
+footer{text-align:center;padding:40px;color:#8993a8}
+</style>
+</head>
+<body>
+<header>
+<h1>AI Tools Directory</h1>
+<p>Discover useful artificial intelligence tools.</p>
+<input id="search" placeholder="Search AI tools...">
+</header>
+<main>
+<div class="filters">
+<select id="category">
+<option value="">All categories</option>
+<option value="Writing">Writing</option>
+<option value="Image">Image Generation</option>
+<option value="Productivity">Productivity</option>
+</select>
+<select id="price">
+<option value="">All prices</option>
+<option value="Free">Free</option>
+<option value="Paid">Paid</option>
+</select>
+</div>
+<div class="grid" id="tools"></div>
+</main>
+<footer>AI Tools Directory — Discover. Explore. Create.</footer>
+<script>
+const data=[
+{name:"ChatGPT",category:"Writing",price:"Free",description:"An AI assistant for writing, learning and ideas.",url:"https://chatgpt.com"},
+{name:"Claude",category:"Writing",price:"Free",description:"An AI assistant for writing and reasoning.",url:"https://claude.ai"},
+{name:"Canva",category:"Image",price:"Free",description:"Create designs and visual content.",url:"https://canva.com"},
+{name:"Perplexity",category:"Productivity",price:"Free",description:"AI-powered search and research assistant.",url:"https://perplexity.ai"},
+{name:"Leonardo AI",category:"Image",price:"Free",description:"Create images using artificial intelligence.",url:"https://leonardo.ai"}
+];
+function render(){
+const q=document.getElementById("search").value.toLowerCase();
+const c=document.getElementById("category").value;
+const p=document.getElementById("price").value;
+const filtered=data.filter(t=>
+t.name.toLowerCase().includes(q)&&
+(!c||t.category===c)&&(!p||t.price===p));
+document.getElementById("tools").innerHTML=filtered.map(t=>`
+<div class="card">
+<span class="tag">${t.category} · ${t.price}</span>
+<h3>${t.name}</h3>
+<p>${t.description}</p>
+<a href="${t.url}" target="_blank" rel="noopener">Visit website →</a>
+</div>`).join("")||"<p>No tools found.</p>";
+}
+["search","category","price"].forEach(id=>
+document.getElementById(id).addEventListener("input",render));
+render();
+</script>
+</body>
+</html>
