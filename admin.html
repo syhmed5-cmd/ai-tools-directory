@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0b1b">
+<title>AI Directory - Admin Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#0c0b1b;--panel:#19172e;--border:#302b45;
+--purple:#a477ff;--pink:#ed70c5;--text:#f8f7ff;
+--muted:#aaa5c0;--green:#64dca0;--red:#ff8298;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.gradient{background:linear-gradient(90deg,#a477ff,#ed70c5);-webkit-background-clip:text;color:transparent}
+.hidden{display:none!important}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{width:100%;max-width:420px;padding:35px;background:var(--panel);border:1px solid #44345e;border-radius:22px}
+.logo{font-size:24px;font-weight:800;text-align:center;margin-bottom:10px}
+.login-card h2{text-align:center;font-size:23px}
+.login-card>p{text-align:center;color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:25px}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.field label{font-size:13px;color:#ded8ed}
+.field input,.field select,.field textarea{
+width:100%;padding:13px;background:#111020;border:1px solid #403752;border-radius:10px;color:white;outline:none
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple)}
+.field textarea{min-height:100px;resize:vertical}
+.primary,.secondary,.danger{
+padding:11px 15px;border-radius:9px;font-size:12px;font-weight:600;border:0
+}
+.primary{background:linear-gradient(100deg,#7955e8,#c45dbd);color:white}
+.secondary{background:#302747;color:#e1d6ff;border:1px solid #51416d}
+.danger{background:#482333;color:#ffb5c2;border:1px solid #773d52}
+.full{width:100%}
+.message{font-size:13px;line-height:1.6;margin-top:15px}
+.success{color:var(--green)}
+.error{color:var(--red)}
+.dashboard{min-height:100vh}
+.sidebar{position:fixed;top:0;bottom:0;left:0;width:235px;background:#131124;border-right:1px solid var(--border);padding:25px 17px;display:flex;flex-direction:column;z-index:10}
+.brand{font-size:19px;font-weight:800;margin:0 0 35px 8px}
+.sidebar-label{font-size:10px;color:#77718d;letter-spacing:1.5px;margin:15px 10px}
+.nav-item{width:100%;padding:13px 12px;margin:3px 0;text-align:left;background:transparent;border:0;border-radius:9px;color:#aaa5c0;font-size:13px}
+.nav-item:hover,.nav-item.active{background:#302447;color:white}
+.sidebar-bottom{margin-top:auto}
+.main{margin-left:235px;padding:30px;max-width:1500px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px;flex-wrap:wrap}
+.topbar h1{font-size:25px;margin:0 0 7px}
+.topbar p{font-size:12px;color:var(--muted);margin:0}
+.profile{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:28px}
+.stat{background:linear-gradient(145deg,#211b38,#171529);border:1px solid var(--border);padding:21px;border-radius:15px}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat-number{font-size:29px;font-weight:800;margin-top:12px}
+.stat-icon{font-size:20px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;min-width:0}
+.panel-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.panel-header h2{font-size:17px;margin:0}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--border);font-size:12px}
+th{color:#aaa5c0;font-weight:600}
+td{color:#e3def1}
+.status{display:inline-block;padding:6px 9px;border-radius:20px;font-size:10px}
+.pending{background:#49351e;color:#ffd38a}
+.approved{background:#183d30;color:#82e3b1}
+.rejected{background:#482333;color:#ffb5c2}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{font-size:11px;padding:8px 10px}
+.empty{text-align:center;color:var(--muted);padding:35px;font-size:13px}
+.modal{position:fixed;inset:0;z-index:30;background:#05040ddd;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.modal.open{display:flex}
+.modal-content{width:100%;max-width:520px;max-height:90vh;overflow:auto;background:#1b1831;border:1px solid #554273;border-radius:18px;padding:25px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-header h2{font-size:18px;margin:0}
+.close{background:#302747;border:0;color:white;padding:8px 12px;border-radius:8px}
+.notice{color:var(--muted);font-size:12px;line-height:1.7;margin-top:15px}
+.loading{color:var(--muted);font-size:13px;padding:20px;text-align:center}
+@media(max-width:900px){
+.sidebar{width:190px}
+.main{margin-left:190px;padding:22px}
+.stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+.sidebar{position:relative;width:100%;height:auto;bottom:auto;padding:13px}
+.brand{margin:5px 5px 12px}
+.sidebar-label,.sidebar-bottom{display:none}
+.sidebar nav{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+.nav-item{margin:0;padding:10px;font-size:11px}
+.main{margin-left:0;padding:17px}
+.stats{gap:9px}
+.stat{padding:14px}
+.stat-number{font-size:23px}
+.panel{padding:14px}
+.topbar h1{font-size:21px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section class="login-screen" id="login-screen">
+<div class="login-card">
+<div class="logo">✦ AI <span class="gradient">Directory</span></div>
+<h2>Admin Login</h2>
+<p>Sign in to manage your AI Tools Directory.</p>
+
+<form id="login-form">
+<div class="field">
+<label for="email">Email Address</label>
+<input id="email" type="email" required autocomplete="username" placeholder="admin@example.com">
+</div>
+<div class="field">
+<label for="password">Password</label>
+<input id="password" type="password" required autocomplete="current-password" placeholder="Your password">
+</div>
+<button class="primary full" id="login-button" type="submit">Sign In →</button>
+<div class="message" id="login-message" role="status"></div>
+</form>
+<p class="notice">Authorized administrators only.</p>
+</div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="dashboard hidden" id="dashboard">
+<aside class="sidebar">
+<div class="brand">✦ AI <span class="gradient">Directory</span></div>
+<div class="sidebar-label">MANAGEMENT</div>
+
+<nav>
+<button class="nav-item active" data-page="overview">▦ Dashboard</button>
+<button class="nav-item" data-page="suggestions">✉ Suggestions</button>
+<button class="nav-item" data-page="tools">✦ All Tools</button>
+<button class="nav-item" data-page="add">＋ Add New Tool</button>
+</nav>
+
+<div class="sidebar-bottom">
+<button class="nav-item" id="logout-button">↪ Sign Out</button>
+</div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+<div>
+<h1 id="page-title">Dashboard Overview</h1>
+<p>Manage your AI Tools Directory</p>
+</div>
+<div class="profile" id="admin-email"></div>
+</header>
+
+<!-- OVERVIEW -->
+<section id="page-overview" class="page">
+<div class="stats">
+<div class="stat"><div class="stat-icon">✦</div><div class="stat-label">Total Tools</div><div class="stat-number" id="stat-tools">—</div></div>
+<div class="stat"><div class="stat-icon">✉</div><div class="stat-label">Total Suggestions</div><div class="stat-number" id="stat-suggestions">—</div></div>
+<div class="stat"><div class="stat-icon">◷</div><div class="stat-label">Pending Reviews</div><div class="stat-number" id="stat-pending">—</div></div>
+<div class="stat"><div class="stat-icon">✓</div><div class="stat-label">Published Tools</div><div class="stat-number" id="stat-published">—</div></div>
+</div>
+
+<div class="panel">
+<div class="panel-header">
+<h2>Recent Suggestions</h2>
+<button class="secondary" data-go="suggestions">View All →</button>
+</div>
+<div id="recent-list" class="loading">Loading suggestions...</div>
+</div>
+</section>
+
+<!-- SUGGESTIONS -->
+<section id="page-suggestions" class="page hidden">
+<div class="panel">
+<div class="panel-header">
+<h2>Tool Suggestions</h2>
+<button class="secondary" id="refresh-suggestions">↻ Refresh</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>Tool</th><th>Category</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+</thead>
+<tbody id="suggestions-body"></tbody>
+</table>
+</div>
+<div id="suggestions-empty" class="empty hidden">No suggestions found.</div>
+</div>
+</section>
+
+<!-- TOOLS -->
+<section id="page-tools" class="page hidden">
+<div class="panel">
+<div class="panel-header">
+<h2>Manage Tools</h2>
+<button class="primary" data-go="add">＋ Add Tool</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Name</th><th>Category</th><th>Visibility</th><th>Actions</th></tr></thead>
+<tbody id="tools-body"></tbody>
+</table>
+</div>
+<div id="tools-empty" class="empty hidden">No tools found.</div>
+</div>
+</section>
+
+<!-- ADD TOOL -->
+<section id="page-add" class="page hidden">
+<div class="panel">
+<div class="panel-header"><h2 id="tool-form-title">Add New Tool</h2></div>
+<form id="tool-form">
+<input type="hidden" id="edit-id">
+<div class="field">
+<label for="new-name">Tool Name *</label>
+<input id="new-name" required maxlength="100" placeholder="Tool name">
+</div>
+<div class="field">
+<label for="new-category">Category *</label>
+<select id="new-category" required>
+<option value="">Choose category</option>
+<option>Writing</option><option>Image</option><option>Video</option>
+<option>Audio</option><option>Coding</option><option>Productivity</option><option>Other</option>
+</select>
+</div>
+<div class="field">
+<label for="new-url">Official Website *</label>
+<input id="new-url" type="url" required placeholder="https://example.com">
+</div>
+<div class="field">
+<label for="new-description">Description *</label>
+<textarea id="new-description" required maxlength="500"></textarea>
+</div>
+<div class="field">
+<label><input id="new-published" type="checkbox" checked> Publish immediately</label>
+</div>
+<button class="primary" type="submit" id="save-tool-button">Save Tool</button>
+<button class="secondary" type="button" id="cancel-edit">Cancel</button>
+<div class="message" id="tool-message" role="status"></div>
+</form>
+</div>
+</section>
+
+</main>
+</section>
+
+<!-- SUGGESTION DETAILS -->
+<div class="modal" id="suggestion-modal">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Suggestion Details</h2>
+<button class="close" id="close-suggestion">✕</button>
+</div>
+<div id="suggestion-details"></div>
+</div>
+</div>
+
+<script>
+const SUPABASE_URL="https://zrigscrgobjsdlorceke.supabase.co";
+const SUPABASE_KEY="sb_publishable_vpMTi9Mc38V2GXCMMrXGkw_twCqyMNn";
+
+const ADMIN_ID="7470f960-6f46-4e6f-b21d-abbd4764b471";
+
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let currentSuggestions=[];
+let currentTools=[];
+let selectedSuggestion=null;
+
+const $=id=>document.getElementById(id);
+
+function showMessage(id,message,type){
+const el=$(id);
+el.textContent=message;
+el.className="message "+(type||"");
+}
+
+function escapeHTML(value){
+return String(value??"").replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+})[char]);
+}
+
+function safeUrl(value){
+try{
+const url=new URL(value);
+return ["http:","https:"].includes(url.protocol)?url.href:"#";
+}catch(e){return "#";}
+}
+
+function dateLabel(value){
+return value?new Date(value).toLocaleDateString():"—";
+}
+
+function setPage(page){
+document.querySelectorAll(".page").forEach(el=>el.classList.add("hidden"));
+$("page-"+page).classList.remove("hidden");
+document.querySelectorAll(".nav-item[data-page]").forEach(btn=>{
+btn.classList.toggle("active",btn.dataset.page===page);
+});
+const titles={
+overview:"Dashboard Overview",
+suggestions:"Manage Suggestions",
+tools:"Manage AI Tools",
+add:"Add or Edit Tool"
+};
+$("page-title").textContent=titles[page];
+if(page==="overview")loadDashboard();
+if(page==="suggestions")loadSuggestions();
+if(page==="tools")loadTools();
+if(page==="add")$("tool-message").textContent="";
+}
+
+async function verifyAdmin(){
+const {data:{user},error}=await db.auth.getUser();
+if(error||!user){
+showLogin();
+return false;
+}
+
+if(user.id!==ADMIN_ID){
+await db.auth.signOut();
+showLogin("This account is not authorized to access the dashboard.");
+return false;
+}
+
+const {data,error:adminError}=await db
+.from("admin_users")
+.select("user_id")
+.eq("user_id",user.id)
+.maybeSingle();
+
+if(adminError||!data){
+await db.auth.signOut();
+showLogin("Administrator access could not be verified.");
+return false;
+}
+
+$("login-screen").classList.add("hidden");
+$("dashboard").classList.remove("hidden");
+$("admin-email").textContent=user.email||"Administrator";
+return true;
+}
+
+function showLogin(message=""){
+$("dashboard").classList.add("hidden");
+$("login-screen").classList.remove("hidden");
+if(message)showMessage("login-message",message,"error");
+}
+
+$("login-form").addEventListener("submit",async event=>{
+event.preventDefault();
+const button=$("login-button");
+button.disabled=true;
+button.textContent="Signing in...";
+showMessage("login-message","");
+
+try{
+const {error}=await db.auth.signInWithPassword({
+email:$("email").value.trim(),
+password:$("password").value
+});
+if(error)throw error;
+
+const allowed=await verifyAdmin();
+if(allowed)setPage("overview");
+
+}catch(error){
+showMessage("login-message",error.message||"Login failed.","error");
+}finally{
+button.disabled=false;
+button.textContent="Sign In →";
+}
+});
+
+$("logout-button").addEventListener("click",async()=>{
+await db.auth.signOut();
+showLogin("You have signed out.");
+});
+
+document.querySelectorAll("[data-page]").forEach(button=>{
+button.addEventListener("click",()=>setPage(button.dataset.page));
+});
+
+document.querySelectorAll("[data-go]").forEach(button=>{
+button.addEventListener("click",()=>setPage(button.dataset.go));
+});
+
+async function loadDashboard(){
+const [tools,suggestions]=await Promise.all([
+db.from("tools").select("id,is_published",{count:"exact"}),
+db.from("tool_suggestions").select("id,status",{count:"exact"})
+]);
+
+if(tools.error||suggestions.error){
+console.error(tools.error,suggestions.error);
+return;
+}
+
+$("stat-tools").textContent=tools.count??0;
+$("stat-suggestions").textContent=suggestions.count??0;
+$("stat-pending").textContent=(suggestions.data||[]).filter(s=>s.status==="pending").length;
+$("stat-published").textContent=(tools.data||[]).filter(t=>t.is_published).length;
+
+const {data,error}=await db.from("tool_suggestions")
+.select("*").order("created_at",{ascending:false}).limit(5);
+
+if(error){
+$("recent-list").textContent="Unable to load suggestions.";
+return;
+}
+
+$("recent-list").innerHTML=data.length?data.map(s=>`
+<div style="padding:13px 0;border-bottom:1px solid #302b45;display:flex;justify-content:space-between;gap:10px;align-items:center">
+<div><strong>${escapeHTML(s.tool_name)}</strong><div class="notice">${escapeHTML(s.category)}</div></div>
+<span class="status ${escapeHTML(s.status)}">${escapeHTML(s.status)}</span>
+</div>`).join(""):'<div class="empty">No suggestions yet.</div>';
+}
+
+async function loadSuggestions(){
+$("suggestions-body").innerHTML='<tr><td colspan="5">Loading...</td></tr>';
+
+const {data,error}=await db.from("tool_suggestions")
+.select("*").order("created_at",{ascending:false});
+
+if(error){
+$("suggestions-body").innerHTML='<tr><td colspan="5">Unable to load suggestions.</td></tr>';
+return;
+}
+
+currentSuggestions=data||[];
+$("suggestions-empty").classList.toggle("hidden",currentSuggestions.length>0);
+
+$("suggestions-body").innerHTML=currentSuggestions.map(s=>`
+<tr>
+<td>${escapeHTML(s.tool_name)}</td>
+<td>${escapeHTML(s.category)}</td>
+<td><span class="status ${escapeHTML(s.status)}">${escapeHTML(s.status)}</span></td>
+<td>${dateLabel(s.created_at)}</td>
+<td><div class="actions">
+<button class="secondary" data-view="${s.id}">View</button>
+${s.status==="pending"?`<button class="primary" data-approve="${s.id}">Approve</button><button class="danger" data-reject="${s.id}">Reject</button>`:""}
+</div></td>
+</tr>`).join("");
+
+$("suggestions-body").querySelectorAll("[data-view]").forEach(btn=>{
+btn.addEventListener("click",()=>viewSuggestion(btn.dataset.view));
+});
+$("suggestions-body").querySelectorAll("[data-approve]").forEach(btn=>{
+btn.addEventListener("click",()=>approveSuggestion(btn.dataset.approve));
+});
+$("suggestions-body").querySelectorAll("[data-reject]").forEach(btn=>{
+btn.addEventListener("click",()=>rejectSuggestion(btn.dataset.reject));
+});
+}
+
+function viewSuggestion(id){
+const s=currentSuggestions.find(x=>x.id===id);
+if(!s)return;
+selectedSuggestion=s;
+
+$("suggestion-details").innerHTML=`
+<p><strong>Tool:</strong> ${escapeHTML(s.tool_name)}</p>
+<p><strong>Category:</strong> ${escapeHTML(s.category)}</p>
+<p><strong>Website:</strong> <a style="color:#c7a8ff" href="${safeUrl(s.website_url)}" target="_blank" rel="noopener">${escapeHTML(s.website_url)}</a></p>
+<p><strong>Description:</strong><br>${escapeHTML(s.description)}</p>
+<p><strong>Submitter:</strong> ${escapeHTML(s.submitter_email||"Not provided")}</p>
+<p><strong>Status:</strong> ${escapeHTML(s.status)}</p>
+`;
+$("suggestion-modal").classList.add("open");
+}
+
+$("close-suggestion").addEventListener("click",()=>$("suggestion-modal").classList.remove("open"));
+
+async function approveSuggestion(id){
+const s=currentSuggestions.find(x=>x.id===id);
+if(!s||s.status!=="pending")return;
+
+if(!confirm("Approve this suggestion and publish it?"))return;
+
+const {data:existing,error:checkError}=await db.from("tools")
+.select("id").eq("name",s.tool_name).limit(1);
+
+if(checkError){
+alert(checkError.message);
+return;
+}
+if(existing?.length){
+alert("A tool with this name already exists. Please check the tools list.");
+return;
+}
+
+const {error:insertError}=await db.from("tools").insert({
+name:s.tool_name,
+category:s.category,
+description:s.description,
+website_url:s.website_url,
+is_published:true
+});
+
+if(insertError){
+alert("Could not publish tool: "+insertError.message);
+return;
+}
+
+const {error:updateError}=await db.from("tool_suggestions")
+.update({status:"approved"}).eq("id",id);
+
+if(updateError){
+alert("The tool was published, but the suggestion status could not be updated. Please check it before retrying.");
+console.error(updateError);
+}else{
+alert("Tool successfully published!");
+}
+
+await loadSuggestions();
+await loadDashboard();
+}
+
+async function rejectSuggestion(id){
+if(!confirm("Reject this suggestion?"))return;
+
+const {error}=await db.from("tool_suggestions")
+.update({status:"rejected"}).eq("id",id);
+
+if(error){alert(error.message);return;}
+
+await loadSuggestions();
+await loadDashboard();
+}
+
+async function loadTools(){
+$("tools-body").innerHTML='<tr><td colspan="4">Loading...</td></tr>';
+
+const {data,error}=await db.from("tools")
+.select("*").order("created_at",{ascending:false});
+
+if(error){
+$("tools-body").innerHTML='<tr><td colspan="4">Unable to load tools.</td></tr>';
+return;
+}
+
+currentTools=data||[];
+$("tools-empty").classList.toggle("hidden",currentTools.length>0);
+
+$("tools-body").innerHTML=currentTools.map(t=>`
+<tr>
+<td>${escapeHTML(t.name)}</td>
+<td>${escapeHTML(t.category)}</td>
+<td><span class="status ${t.is_published?"approved":"pending"}">${t.is_published?"Published":"Draft"}</span></td>
+<td><div class="actions">
+<button class="secondary" data-edit="${t.id}">Edit</button>
+<button class="danger" data-delete="${t.id}">Delete</button>
+</div></td>
+</tr>`).join("");
+
+$("tools-body").querySelectorAll("[data-edit]").forEach(btn=>{
+btn.addEventListener("click",()=>editTool(btn.dataset.edit));
+});
+$("tools-body").querySelectorAll("[data-delete]").forEach(btn=>{
+btn.addEventListener("click",()=>deleteTool(btn.dataset.delete));
+});
+}
+
+function editTool(id){
+const t=currentTools.find(x=>x.id===id);
+if(!t)return;
+
+$("edit-id").value=t.id;
+$("new-name").value=t.name;
+$("new-category").value=t.category;
+$("new-url").value=t.website_url;
+$("new-description").value=t.description;
+$("new-published").checked=t.is_published;
+$("tool-form-title").textContent="Edit Tool";
+$("save-tool-button").textContent="Save Changes";
+setPage("add");
+}
+
+function resetToolForm(){
+$("tool-form").reset();
+$("edit-id").value="";
+$("new-published").checked=true;
+$("tool-form-title").textContent="Add New Tool";
+$("save-tool-button").textContent="Save Tool";
+showMessage("tool-message","");
+}
+
+$("cancel-edit").addEventListener("click",resetToolForm);
+
+$("tool-form").addEventListener("submit",async event=>{
+event.preventDefault();
+
+const id=$("edit-id").value;
+const name=$("new-name").value.trim();
+const category=$("new-category").value;
+const website=$("new-url").value.trim();
+const description=$("new-description").value.trim();
+const published=$("new-published").checked;
+
+let parsed;
+try{
+parsed=new URL(website);
+if(!["http:","https:"].includes(parsed.protocol))throw new Error();
+}catch(e){
+showMessage("tool-message","Please enter a valid website URL.","error");
+return;
+}
+
+const payload={
+name,category,website_url:parsed.href,description,is_published:published
+};
+
+const button=$("save-tool-button");
+button.disabled=true;
+
+try{
+let result;
+if(id){
+result=await db.from("tools").update(payload).eq("id",id);
+}else{
+result=await db.from("tools").insert(payload);
+}
+
+if(result.error)throw result.error;
+
+showMessage("tool-message",id?"Tool updated successfully!":"Tool added successfully!","success");
+resetToolForm();
+await loadTools();
+await loadDashboard();
+setPage("tools");
+
+}catch(error){
+showMessage("tool-message",error.message||"Could not save tool.","error");
+}finally{
+button.disabled=false;
+}
+});
+
+async function deleteTool(id){
+const t=currentTools.find(x=>x.id===id);
+if(!t||!confirm("Permanently delete "+t.name+"?"))return;
+
+const {error}=await db.from("tools").delete().eq("id",id);
+if(error){alert(error.message);return;}
+
+await loadTools();
+await loadDashboard();
+}
+
+$("refresh-suggestions").addEventListener("click",loadSuggestions);
+
+async function start(){
+const {data:{session}}=await db.auth.getSession();
+if(session){
+const allowed=await verifyAdmin();
+if(allowed)setPage("overview");
+}else{
+showLogin();
+}
+
+db.auth.onAuthStateChange((event,session)=>{
+if(event==="SIGNED_OUT"||!session)showLogin();
+});
+}
+
+start();
+</script>
+</body>
+</html>
