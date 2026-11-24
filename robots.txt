@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://syhmed5-cmd.github.io/ai-tools-directory/sitemap.xml
