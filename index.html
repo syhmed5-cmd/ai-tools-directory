@@ -4,120 +4,364 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0c0b1b">
-<meta name="description" content="Discover the best AI tools for writing, images, video, coding and productivity.">
-<title>AI Tools Directory PRO</title>
+<meta name="theme-color" content="#090914">
+<meta name="description" content="Discover the best AI tools for creativity, productivity, coding, images and more.">
+<title>AI Tools Directory | Discover What's Possible</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
---bg:#0c0b1b;
---surface:#19172e;
+--bg:#090914;
+--panel:#121222;
+--panel2:#19182b;
+--border:#29263e;
+--text:#f7f5ff;
+--muted:#9692ac;
 --purple:#a477ff;
---pink:#ed70c5;
---text:#f8f7ff;
---muted:#aaa5c0;
+--pink:#e879c8;
+--blue:#6caeff;
+--gradient:linear-gradient(110deg,#9264ff,#df70cb);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-a{text-decoration:none;color:inherit}
+html{scroll-behavior:smooth}
+body{
+margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,Arial,sans-serif;
+}
 button,input,textarea,select{font:inherit}
-nav{max-width:1180px;margin:auto;padding:22px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;font-weight:800}
-.logo span,.gradient{background:linear-gradient(90deg,#a477ff,#ed70c5,#76baff);-webkit-background-clip:text;color:transparent}
-.nav-links{display:flex;gap:20px;font-size:13px;color:#d2cce5}
-.hero{text-align:center;padding:80px 20px 60px;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;width:420px;height:420px;background:#783bff;filter:blur(150px);opacity:.2;top:-230px;left:calc(50% - 210px);border-radius:50%}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.container{width:min(1160px,calc(100% - 40px));margin:auto}
+.gradient{
+background:linear-gradient(100deg,#ad8aff,#f18bcf,#83bdff);
+-webkit-background-clip:text;color:transparent
+}
+.nav{
+height:76px;display:flex;align-items:center;
+justify-content:space-between;border-bottom:1px solid #ffffff0b;
+position:sticky;top:0;z-index:50;
+background:#090914eF;backdrop-filter:blur(18px);
+padding:0 max(calc((100% - 1160px)/2),20px);
+}
+.logo{font-size:21px;font-weight:800;letter-spacing:-1px}
+.logo-mark{
+display:inline-grid;place-items:center;width:34px;height:34px;
+border-radius:11px;background:var(--gradient);margin-right:8px;
+color:white;font-size:17px
+}
+.nav-links{display:flex;align-items:center;gap:28px;font-size:12px;color:#c3bfd3}
+.nav-links a:hover{color:white}
+.nav-cta{
+background:var(--gradient);padding:11px 17px;
+border-radius:9px;color:white!important;font-weight:700
+}
+.hero{
+position:relative;overflow:hidden;text-align:center;
+padding:100px 20px 75px;
+}
+.hero:before{
+content:"";position:absolute;width:650px;height:450px;
+background:#7645f5;filter:blur(160px);opacity:.18;
+top:-300px;left:calc(50% - 325px);pointer-events:none
+}
 .hero-content{position:relative;max-width:850px;margin:auto}
-.eyebrow{display:inline-block;border:1px solid #59477d;background:#241936;padding:9px 15px;border-radius:30px;color:#d6baff;font-size:11px}
-h1{font-size:clamp(40px,7vw,68px);letter-spacing:-3px;line-height:1.1;margin:27px 0 18px}
-.hero p{color:var(--muted);max-width:600px;margin:auto;line-height:1.8;font-size:15px}
-.search-box{display:flex;max-width:590px;margin:30px auto;padding:7px;border:1px solid #39334f;background:#19172d;border-radius:14px}
-.search-box input{flex:1;min-width:0;padding:13px;border:0;outline:0;color:white;background:transparent}
-.search-box button,.primary{background:linear-gradient(110deg,#8459f5,#db6acb);color:white;border:0;border-radius:9px;padding:12px 18px;cursor:pointer}
-main{max-width:1180px;margin:auto;padding:25px 20px 65px}
-.heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
-.heading h2{font-size:25px;margin:0}
-.count{color:var(--muted);font-size:13px}
-.categories{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
-.category{border:1px solid #34304a;border-radius:30px;background:#17152a;color:#c7c3d9;padding:10px 16px;font-size:12px;cursor:pointer}
-.category.active,.category:hover{background:linear-gradient(110deg,#7955e8,#c45dbd);color:white;border-color:transparent}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:18px}
-.card{padding:22px;border:1px solid #302b45;border-radius:18px;background:linear-gradient(145deg,#1b1831,#131224);transition:.25s}
-.card:hover{transform:translateY(-4px);border-color:#8763dc}
-.card-top{display:flex;justify-content:space-between;align-items:center}
-.tool-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#6544b8,#d16cc6);font-size:23px}
-.tool-category{color:#c39dff;background:#30234b;padding:7px 10px;border-radius:20px;font-size:11px}
-.card h3{font-size:19px;margin:18px 0 8px}
-.card p{min-height:65px;color:var(--muted);font-size:13px;line-height:1.7}
-.actions{display:flex;gap:9px;margin-top:14px}
-.details-btn,.favorite-btn{padding:11px;border-radius:9px;cursor:pointer;font-size:12px}
-.details-btn{flex:1;border:1px solid #7655c9;background:#292044;color:#d8c5ff}
-.favorite-btn{border:1px solid #49405f;background:#302747;color:#aaa;font-size:17px}
-.favorite-btn.active{color:#ff75b5}
-.visit{display:inline-block;margin-top:15px;color:#bd9aff;font-size:13px;font-weight:600}
-.empty{display:none;grid-column:1/-1;text-align:center;padding:45px;color:var(--muted)}
-.submit-section{max-width:780px;margin:25px auto 70px;padding:32px 25px;border:1px solid #44345e;border-radius:22px;background:linear-gradient(145deg,#21183a,#17152a)}
-.submit-section h2{font-size:27px;margin:0 0 12px}
-.submit-section>p{color:var(--muted);font-size:14px;line-height:1.7}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:25px}
+.announcement{
+display:inline-flex;align-items:center;gap:9px;
+padding:9px 15px;border:1px solid #7553b7;
+border-radius:30px;background:#211735;color:#d8c3ff;
+font-size:11px;font-weight:600
+}
+.dot{width:7px;height:7px;background:#a78bfa;border-radius:50%}
+.hero h1{
+font-size:clamp(43px,7vw,75px);
+line-height:1.08;letter-spacing:-4px;margin:28px 0 20px;
+font-weight:800
+}
+.hero p{
+max-width:590px;margin:auto;color:var(--muted);
+font-size:15px;line-height:1.9
+}
+.search{
+max-width:650px;margin:35px auto 18px;
+padding:7px;display:flex;gap:8px;
+border:1px solid #37314e;background:#151427;
+border-radius:14px;box-shadow:0 15px 65px #0005
+}
+.search input{
+flex:1;min-width:0;border:0;outline:0;
+background:transparent;color:white;padding:13px 15px;font-size:13px
+}
+.search button,.primary{
+background:var(--gradient);border:0;color:white;
+padding:13px 23px;border-radius:9px;font-size:12px;font-weight:700
+}
+.hero-note{color:#78738e;font-size:11px}
+.hero-stats{
+display:flex;justify-content:center;gap:48px;
+margin-top:45px;flex-wrap:wrap
+}
+.hero-stat strong{font-size:23px;display:block}
+.hero-stat span{font-size:10px;color:var(--muted)}
+.section{padding:45px 0}
+.section-header{
+display:flex;align-items:end;justify-content:space-between;
+gap:15px;flex-wrap:wrap;margin-bottom:25px
+}
+.section-header h2{font-size:25px;letter-spacing:-1px;margin:0 0 7px}
+.section-header p{font-size:12px;color:var(--muted);margin:0}
+.featured{
+display:grid;grid-template-columns:repeat(3,1fr);gap:15px
+}
+.feature-card{
+position:relative;overflow:hidden;padding:24px;
+border:1px solid var(--border);border-radius:17px;
+background:linear-gradient(140deg,#211a3a,#141324);
+min-height:170px;transition:.25s
+}
+.feature-card:hover{transform:translateY(-4px);border-color:#8863df}
+.feature-card:after{
+content:"";position:absolute;width:150px;height:150px;
+border-radius:50%;background:#a477ff;filter:blur(85px);
+opacity:.17;right:-50px;top:-50px
+}
+.feature-card .tag{font-size:10px;color:#d5baff}
+.feature-card h3{font-size:19px;margin:16px 0 8px}
+.feature-card p{font-size:11px;color:var(--muted);line-height:1.7}
+.feature-card button{
+background:transparent;border:0;color:#c7aaff;
+font-size:11px;padding:0;margin-top:5px
+}
+.categories{
+display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px
+}
+.category{
+padding:10px 15px;border-radius:30px;
+background:#151426;border:1px solid var(--border);
+color:#bcb7cf;font-size:11px;transition:.2s
+}
+.category:hover,.category.active{
+background:var(--gradient);color:white;border-color:transparent
+}
+.toolbar{
+display:flex;justify-content:space-between;align-items:center;
+gap:12px;flex-wrap:wrap;margin-bottom:20px
+}
+.toolbar-label{font-size:12px;color:var(--muted)}
+.sort{
+background:#151426;border:1px solid var(--border);
+color:white;padding:10px 13px;border-radius:9px;font-size:11px
+}
+.grid{
+display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+gap:17px
+}
+.tool-card{
+background:linear-gradient(145deg,#171629,#11111e);
+border:1px solid var(--border);border-radius:16px;
+padding:20px;transition:.25s;min-width:0
+}
+.tool-card:hover{
+transform:translateY(-4px);
+border-color:#795ab6;box-shadow:0 14px 35px #0003
+}
+.tool-top{display:flex;justify-content:space-between;align-items:center}
+.logo-box{
+width:49px;height:49px;border-radius:13px;
+background:#242139;border:1px solid #ffffff12;
+display:grid;place-items:center;overflow:hidden;
+}
+.logo-box img{width:29px;height:29px;object-fit:contain}
+.logo-fallback{
+width:100%;height:100%;display:grid;place-items:center;
+background:var(--gradient);font-weight:800;font-size:19px;color:white
+}
+.tool-category{
+font-size:10px;color:#c4a5ff;
+background:#302348;padding:7px 10px;border-radius:20px
+}
+.tool-card h3{font-size:16px;margin:17px 0 8px}
+.tool-card p{
+font-size:11px;line-height:1.8;color:var(--muted);
+min-height:60px;margin:0
+}
+.tool-actions{
+display:flex;align-items:center;gap:8px;margin-top:17px
+}
+.details{
+flex:1;padding:11px;border-radius:8px;
+border:1px solid #534073;background:#25203b;
+color:#d7c6ff;font-size:11px;font-weight:600
+}
+.visit{
+padding:11px 13px;border-radius:8px;
+background:var(--gradient);color:white;font-size:11px;font-weight:700
+}
+.favorite{
+width:36px;height:36px;border-radius:8px;
+background:#272239;border:1px solid #443952;color:#aaa;
+font-size:18px
+}
+.favorite.active{color:#ff79b8}
+.empty{
+grid-column:1/-1;text-align:center;padding:50px;
+color:var(--muted);border:1px dashed #39334e;border-radius:15px
+}
+.load-more{
+display:block;margin:30px auto 0;
+background:#19172c;border:1px solid #51416e;
+padding:12px 25px;border-radius:9px;color:#d6c4ff;
+font-size:12px
+}
+.submit-section{
+margin:55px auto 75px;max-width:850px;padding:35px;
+border:1px solid #45355f;border-radius:21px;
+background:linear-gradient(140deg,#211a38,#141323)
+}
+.submit-section h2{font-size:27px;margin:0 0 10px}
+.submit-section>p{font-size:12px;color:var(--muted);line-height:1.8}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px}
 .field{display:flex;flex-direction:column;gap:8px}
 .field.full{grid-column:1/-1}
-.field label{font-size:13px;color:#ded8ed}
-.field input,.field select,.field textarea{width:100%;padding:13px;border:1px solid #403752;border-radius:10px;background:#111020;color:white;outline:0}
+.field label{font-size:11px;color:#d9d3e8}
+.field input,.field select,.field textarea{
+width:100%;padding:13px;border-radius:9px;
+border:1px solid #403752;background:#111020;color:white;outline:0
+}
 .field textarea{min-height:100px;resize:vertical}
-.submit-button{width:100%;margin-top:20px;padding:14px;border:0;border-radius:10px;background:linear-gradient(100deg,#7955e8,#c45dbd);color:white;font-weight:700;cursor:pointer}
-.submit-button:disabled{opacity:.6}
-.status{margin-top:15px;font-size:13px;line-height:1.6}
-.success{color:#7de0ad}
-.error{color:#ff8c9b}
-.hp{position:absolute;left:-5000px}
-.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:#080713dd;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{position:relative;width:100%;max-width:460px;background:#1b1831;border:1px solid #554273;border-radius:20px;padding:30px}
-.modal-close{position:absolute;top:15px;right:15px;border:0;background:#302747;color:white;border-radius:8px;padding:9px 12px;cursor:pointer}
-.modal h2{margin:20px 0 10px}
-.modal p{color:#b8b2ce;line-height:1.8;font-size:14px}
-.modal-link{display:inline-block;margin-top:15px;padding:12px 19px;border-radius:10px;background:linear-gradient(100deg,#7955e8,#c45dbd);color:white;font-size:13px}
-footer{border-top:1px solid #302b45;text-align:center;padding:35px 20px;color:#9994ad;font-size:13px}
+.submit-btn{
+width:100%;padding:14px;border:0;border-radius:9px;
+background:var(--gradient);color:white;font-weight:700;
+font-size:12px;margin-top:18px
+}
+.submit-btn:disabled{opacity:.6}
+.form-status{font-size:12px;margin-top:12px}
+.success{color:#71dda9}.error{color:#ff8a9c}
+.hp{position:absolute;left:-9999px}
+.modal{
+display:none;position:fixed;inset:0;z-index:100;
+background:#06050cdd;backdrop-filter:blur(10px);
+align-items:center;justify-content:center;padding:20px
+}
+.modal.open{display:flex}
+.modal-box{
+width:100%;max-width:470px;background:#19172e;
+border:1px solid #574375;border-radius:19px;padding:27px;
+position:relative
+}
+.modal-close{
+position:absolute;right:15px;top:15px;
+background:#302747;border:0;color:white;padding:8px 11px;border-radius:8px
+}
+.modal h2{font-size:23px;margin:20px 0 10px}
+.modal p{font-size:12px;line-height:1.9;color:var(--muted)}
+.modal-visit{
+display:inline-block;margin-top:15px;padding:12px 18px;
+border-radius:9px;background:var(--gradient);color:white;font-size:11px
+}
+footer{
+border-top:1px solid var(--border);
+padding:40px 20px;text-align:center
+}
+footer strong{font-size:19px}
+footer p{color:var(--muted);font-size:11px;line-height:1.9}
+.footer-links{display:flex;justify-content:center;gap:22px;margin:20px;font-size:11px;color:#bdb6d1}
+@media(max-width:900px){
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:600px){
-.hero{padding-top:60px}
-h1{letter-spacing:-2px}
+.container{width:calc(100% - 30px)}
+.nav{height:65px;padding:0 15px}
+.nav-links{gap:13px;font-size:10px}
+.nav-cta{padding:9px}
+.hero{padding:75px 15px 55px}
+.hero h1{letter-spacing:-2px}
+.hero p{font-size:13px}
+.hero-stats{gap:23px}
+.hero-stat strong{font-size:19px}
+.featured{grid-template-columns:1fr}
 .grid{grid-template-columns:1fr}
 .form-grid{grid-template-columns:1fr}
 .field.full{grid-column:auto}
-.nav-links{gap:10px;font-size:11px}
+.submit-section{padding:23px 17px}
+.section-header h2{font-size:22px}
 }
 </style>
 </head>
 
 <body>
-<nav>
-<a class="logo" href="#">✦ AI <span>Directory</span></a>
+
+<nav class="nav">
+<a class="logo" href="#">✦ AI <span class="gradient">Directory</span></a>
 <div class="nav-links">
 <a href="#explore">Explore</a>
-<a href="#submit">Suggest a Tool</a>
+<a href="#categories">Categories</a>
+<a href="#submit" class="nav-cta">Suggest a Tool ↗</a>
 </div>
 </nav>
 
 <header class="hero">
 <div class="hero-content">
-<span class="eyebrow">✦ YOUR GATEWAY TO ARTIFICIAL INTELLIGENCE</span>
-<h1>Discover the Best<br><span class="gradient">AI Tools</span> for Everything</h1>
-<p>Explore powerful AI tools to create, learn, work and bring your ideas to life.</p>
-<div class="search-box">
-<input id="search" type="search" placeholder="Search for AI tools..." aria-label="Search tools">
-<button id="search-button">Search</button>
+<div class="announcement"><span class="dot"></span> YOUR GATEWAY TO AI INNOVATION</div>
+
+<h1>Find the Right AI Tool.<br><span class="gradient">Unlock Your Potential.</span></h1>
+
+<p>Explore the world's best AI tools for creativity, productivity, business and beyond. One directory. Endless possibilities.</p>
+
+<div class="search">
+<input id="search" type="search" placeholder="Search AI tools, categories..." aria-label="Search AI tools">
+<button id="search-button">Search ↗</button>
+</div>
+
+<div class="hero-note">Discover smarter ways to create, work and innovate.</div>
+
+<div class="hero-stats">
+<div class="hero-stat"><strong id="hero-count">18+</strong><span>AI TOOLS</span></div>
+<div class="hero-stat"><strong>7</strong><span>CATEGORIES</span></div>
+<div class="hero-stat"><strong>Free</strong><span>TO EXPLORE</span></div>
 </div>
 </div>
 </header>
 
-<main id="explore">
-<div class="heading">
-<h2>Explore AI Tools</h2>
-<span class="count" id="count"></span>
+<main class="container">
+
+<section class="section">
+<div class="section-header">
+<div><h2>Discover What's Trending</h2><p>Explore popular AI tools and powerful platforms.</p></div>
 </div>
+
+<div class="featured">
+<article class="feature-card">
+<span class="tag">✦ AI ASSISTANTS</span>
+<h3>Think Smarter</h3>
+<p>Discover intelligent assistants for research, writing and problem-solving.</p>
+<button data-feature="Writing">Explore Assistants →</button>
+</article>
+
+<article class="feature-card">
+<span class="tag">✦ CREATIVE AI</span>
+<h3>Create Anything</h3>
+<p>Turn your ideas into images, videos and original creative projects.</p>
+<button data-feature="Image">Explore Creative Tools →</button>
+</article>
+
+<article class="feature-card">
+<span class="tag">✦ PRODUCTIVITY</span>
+<h3>Work Smarter</h3>
+<p>Discover tools that help you organize, automate and build faster.</p>
+<button data-feature="Productivity">Boost Productivity →</button>
+</article>
+</div>
+</section>
+
+<section class="section" id="explore">
+<div class="section-header">
+<div><h2>Explore AI Tools</h2><p>Find the perfect tool for your next project.</p></div>
+<div class="toolbar-label" id="count">Loading tools...</div>
+</div>
+
 <div class="categories" id="categories">
 <button class="category active" data-category="All">All Tools</button>
 <button class="category" data-category="Writing">Writing</button>
@@ -126,15 +370,26 @@ h1{letter-spacing:-2px}
 <button class="category" data-category="Audio">Audio</button>
 <button class="category" data-category="Coding">Coding</button>
 <button class="category" data-category="Productivity">Productivity</button>
-<button class="category" id="favorites-filter">♥ My Favorites</button>
+<button class="category" data-category="Other">Other</button>
+<button class="category" id="favorites-filter">♥ Favorites</button>
 </div>
+
+<div class="toolbar">
+<span class="toolbar-label" id="result-label">All available tools</span>
+<select class="sort" id="sort">
+<option value="default">Sort: Default</option>
+<option value="az">Name: A to Z</option>
+<option value="za">Name: Z to A</option>
+</select>
+</div>
+
 <div class="grid" id="tools-grid"></div>
-<div class="empty" id="empty">No tools found. Try another search.</div>
-</main>
+<button class="load-more hidden" id="load-more">Load More Tools</button>
+</section>
 
 <section class="submit-section" id="submit">
-<h2>Suggest an <span class="gradient">AI Tool</span></h2>
-<p>Know a useful AI tool? Share it with our community. Every suggestion is reviewed before being added.</p>
+<h2>Have a Great AI Tool?</h2>
+<p>Help our community discover useful AI tools. Submit your recommendation and our team will review it before publication.</p>
 
 <form id="suggestion-form">
 <div class="form-grid">
@@ -145,7 +400,7 @@ h1{letter-spacing:-2px}
 <div class="field">
 <label for="tool-category">Category *</label>
 <select id="tool-category" name="category" required>
-<option value="">Choose a category</option>
+<option value="">Select Category</option>
 <option>Writing</option><option>Image</option><option>Video</option>
 <option>Audio</option><option>Coding</option><option>Productivity</option><option>Other</option>
 </select>
@@ -156,262 +411,338 @@ h1{letter-spacing:-2px}
 </div>
 <div class="field full">
 <label for="tool-description">Description *</label>
-<textarea id="tool-description" name="description" required maxlength="500" placeholder="What does this AI tool do?"></textarea>
+<textarea id="tool-description" name="description" required maxlength="500" placeholder="Tell us what makes this tool useful..."></textarea>
 </div>
 <div class="field full">
-<label for="submit-email">Your Email (Optional)</label>
+<label for="submit-email">Email (Optional)</label>
 <input id="submit-email" name="submitter_email" type="email" placeholder="you@example.com">
 </div>
 </div>
+
 <div class="hp" aria-hidden="true">
-<label>Leave empty</label>
 <input name="website_check" tabindex="-1" autocomplete="off">
 </div>
-<button class="submit-button" id="submit-button" type="submit">Submit Tool Suggestion ↗</button>
-<div class="status" id="form-status" role="status" aria-live="polite"></div>
+
+<button class="submit-btn" id="submit-button" type="submit">Submit Your Suggestion ↗</button>
+<div class="form-status" id="form-status" role="status" aria-live="polite"></div>
 </form>
 </section>
 
-<div class="modal-overlay" id="tool-modal">
-<div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
-<button class="modal-close" id="close-modal" aria-label="Close">✕</button>
-<div class="tool-icon" id="modal-icon">✨</div>
+</main>
+
+<footer>
+<strong>✦ AI <span class="gradient">Directory</span></strong>
+<p>Your gateway to the world of artificial intelligence.</p>
+<div class="footer-links">
+<a href="#explore">Explore</a>
+<a href="#categories">Categories</a>
+<a href="#submit">Suggest a Tool</a>
+</div>
+<p>© 2026 AI Tools Directory. All rights reserved.</p>
+</footer>
+
+<div class="modal" id="tool-modal">
+<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+<button class="modal-close" id="close-modal">✕</button>
+<div class="logo-box" id="modal-logo"><span class="logo-fallback">AI</span></div>
 <h2 id="modal-name">Tool Name</h2>
 <span class="tool-category" id="modal-category">Category</span>
 <p id="modal-description"></p>
-<a class="modal-link" id="modal-link" href="#" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+<a class="modal-visit" id="modal-link" href="#" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
 </div>
 </div>
-
-<footer>
-<p>✦ <strong>AI Tools Directory</strong></p>
-<p>Discover. Explore. Create.</p>
-<p>© 2026 AI Tools Directory.</p>
-</footer>
 
 <script>
 const SUPABASE_URL="https://zrigscrgobjsdlorceke.supabase.co";
 const SUPABASE_KEY="sb_publishable_vpMTi9Mc38V2GXCMMrXGkw_twCqyMNn";
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
-const FORM_ENDPOINT="https://formspree.io/f/mwlowaab";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const defaultTools=[
-{name:"ChatGPT",category:"Writing",icon:"✍️",description:"An AI assistant for writing, learning, brainstorming and everyday tasks.",url:"https://chatgpt.com"},
-{name:"Claude",category:"Writing",icon:"🧠",description:"An AI assistant for writing, analysis, coding and complex reasoning.",url:"https://claude.ai"},
-{name:"Gemini",category:"Writing",icon:"✨",description:"Google's AI assistant for ideas, research and creative work.",url:"https://gemini.google.com"},
-{name:"Perplexity",category:"Productivity",icon:"🔎",description:"An AI-powered search and research assistant with cited sources.",url:"https://perplexity.ai"},
-{name:"Canva",category:"Image",icon:"🎨",description:"Create designs, presentations and visual content with AI features.",url:"https://canva.com"},
-{name:"Leonardo AI",category:"Image",icon:"🖼️",description:"Generate creative images and visual assets using AI.",url:"https://leonardo.ai"},
-{name:"Ideogram",category:"Image",icon:"💡",description:"Create images and graphic designs from text prompts.",url:"https://ideogram.ai"},
-{name:"Adobe Firefly",category:"Image",icon:"🔥",description:"Explore generative AI tools for creative image and design workflows.",url:"https://firefly.adobe.com"},
-{name:"Runway",category:"Video",icon:"🎬",description:"Explore AI-powered video generation and creative video tools.",url:"https://runwayml.com"},
-{name:"Pika",category:"Video",icon:"🎥",description:"Create and experiment with AI-generated video.",url:"https://pika.art"},
-{name:"CapCut",category:"Video",icon:"✂️",description:"Edit videos with creative tools and AI-assisted features.",url:"https://capcut.com"},
-{name:"ElevenLabs",category:"Audio",icon:"🎙️",description:"Create AI-generated speech and explore voice technology.",url:"https://elevenlabs.io"},
-{name:"Suno",category:"Audio",icon:"🎵",description:"Create original music with AI-powered music generation.",url:"https://suno.com"},
-{name:"Udio",category:"Audio",icon:"🎧",description:"Explore AI music creation and audio generation.",url:"https://udio.com"},
-{name:"Cursor",category:"Coding",icon:"💻",description:"An AI-powered code editor designed to support software development.",url:"https://cursor.com"},
-{name:"GitHub Copilot",category:"Coding",icon:"👨‍💻",description:"An AI coding assistant integrated into developer workflows.",url:"https://github.com/features/copilot"},
-{name:"Replit",category:"Coding",icon:"🚀",description:"Build and experiment with software using an online development environment.",url:"https://replit.com"},
-{name:"Notion AI",category:"Productivity",icon:"📝",description:"AI features for organizing information and working with notes.",url:"https://notion.so"}
+{name:"ChatGPT",category:"Writing",description:"An AI assistant for writing, learning, brainstorming and everyday tasks.",url:"https://chatgpt.com"},
+{name:"Claude",category:"Writing",description:"An AI assistant for writing, analysis, coding and reasoning.",url:"https://claude.ai"},
+{name:"Gemini",category:"Writing",description:"Google's AI assistant for research, creativity and productivity.",url:"https://gemini.google.com"},
+{name:"Perplexity",category:"Productivity",description:"An AI-powered research and search assistant.",url:"https://perplexity.ai"},
+{name:"Canva",category:"Image",description:"Create designs, presentations and visual content.",url:"https://canva.com"},
+{name:"Leonardo AI",category:"Image",description:"Generate creative images and visual assets using AI.",url:"https://leonardo.ai"},
+{name:"Ideogram",category:"Image",description:"Create images and graphic designs from text prompts.",url:"https://ideogram.ai"},
+{name:"Adobe Firefly",category:"Image",description:"Explore generative AI tools for creative image workflows.",url:"https://firefly.adobe.com"},
+{name:"Runway",category:"Video",description:"AI-powered video generation and creative video tools.",url:"https://runwayml.com"},
+{name:"Pika",category:"Video",description:"Create and experiment with AI-generated videos.",url:"https://pika.art"},
+{name:"CapCut",category:"Video",description:"Video editing with creative and AI-assisted tools.",url:"https://capcut.com"},
+{name:"ElevenLabs",category:"Audio",description:"AI-generated speech and voice technology.",url:"https://elevenlabs.io"},
+{name:"Suno",category:"Audio",description:"Create original music using AI.",url:"https://suno.com"},
+{name:"Udio",category:"Audio",description:"AI music creation and audio generation.",url:"https://udio.com"},
+{name:"Cursor",category:"Coding",description:"An AI-powered code editor for software development.",url:"https://cursor.com"},
+{name:"GitHub Copilot",category:"Coding",description:"An AI coding assistant for developer workflows.",url:"https://github.com/features/copilot"},
+{name:"Replit",category:"Coding",description:"Build and experiment with software online.",url:"https://replit.com"},
+{name:"Notion AI",category:"Productivity",description:"AI features for organizing information and notes.",url:"https://notion.so"}
 ];
 
 let tools=[...defaultTools];
 let activeCategory="All";
 let favoritesOnly=false;
 let favorites=[];
+let visibleCount=12;
 
 try{
 const saved=JSON.parse(localStorage.getItem("ai-directory-favorites")||"[]");
 if(Array.isArray(saved))favorites=saved;
-}catch(e){favorites=[];}
+}catch(e){}
 
-const grid=document.getElementById("tools-grid");
-const search=document.getElementById("search");
-const count=document.getElementById("count");
-const empty=document.getElementById("empty");
-const modal=document.getElementById("tool-modal");
+const $=id=>document.getElementById(id);
+
+function getDomain(url){
+try{return new URL(url).hostname.replace(/^www\./,"");}
+catch(e){return "";}
+}
+
+function logoURL(url){
+const domain=getDomain(url);
+return domain?"https://www.google.com/s2/favicons?domain="+encodeURIComponent(domain)+"&sz=128":"";
+}
+
+function logoElement(tool){
+const box=document.createElement("div");
+box.className="logo-box";
+const fallback=document.createElement("span");
+fallback.className="logo-fallback";
+fallback.textContent=(tool.name||"AI").charAt(0).toUpperCase();
+box.appendChild(fallback);
+
+const src=logoURL(tool.url);
+if(src){
+const img=document.createElement("img");
+img.alt=tool.name+" logo";
+img.loading="lazy";
+img.src=src;
+img.onerror=()=>img.remove();
+img.onload=()=>{fallback.remove();};
+box.appendChild(img);
+}
+return box;
+}
 
 function saveFavorites(){
 try{localStorage.setItem("ai-directory-favorites",JSON.stringify(favorites));}
-catch(e){console.warn("Favorites could not be saved.");}
+catch(e){}
 }
 
-function normalizeTool(row){
-return {
+function normalize(row){
+return{
 name:row.name,
-category:row.category,
-description:row.description,
-url:row.website_url,
-icon:"✨"
+category:row.category||"Other",
+description:row.description||"Explore this AI tool.",
+url:row.website_url
 };
 }
 
 async function loadTools(){
 try{
-const {data,error}=await supabaseClient
-.from("tools")
+const {data,error}=await db.from("tools")
 .select("name,category,description,website_url")
 .eq("is_published",true);
 
 if(error)throw error;
 
-if(data && data.length){
-const dbTools=data.map(normalizeTool);
-const names=new Set(dbTools.map(t=>t.name.toLowerCase()));
-tools=[...dbTools,...defaultTools.filter(t=>!names.has(t.name.toLowerCase()))];
+if(data&&data.length){
+const names=new Set(data.map(t=>t.name.toLowerCase()));
+tools=[
+...data.map(normalize),
+...defaultTools.filter(t=>!names.has(t.name.toLowerCase()))
+];
 }
 }catch(error){
-console.error("Supabase tools loading failed:",error);
+console.error("Could not load database tools:",error);
 }
-renderTools();
+$("hero-count").textContent=tools.length+"+";
+render();
 }
 
 function openDetails(tool){
-document.getElementById("modal-icon").textContent=tool.icon;
-document.getElementById("modal-name").textContent=tool.name;
-document.getElementById("modal-category").textContent=tool.category;
-document.getElementById("modal-description").textContent=tool.description;
-document.getElementById("modal-link").href=tool.url;
-modal.classList.add("open");
-document.getElementById("close-modal").focus();
+$("modal-logo").replaceWith(logoElement(tool));
+$("modal-logo").id="modal-logo";
+$("modal-name").textContent=tool.name;
+$("modal-category").textContent=tool.category;
+$("modal-description").textContent=tool.description;
+$("modal-link").href=tool.url;
+$("tool-modal").classList.add("open");
+$("close-modal").focus();
 }
 
-function renderTools(){
-const query=search.value.toLowerCase().trim();
-const filtered=tools.filter(tool=>{
+function render(){
+const query=$("search").value.toLowerCase().trim();
+let filtered=tools.filter(tool=>{
 const matchesSearch=(tool.name+" "+tool.description+" "+tool.category).toLowerCase().includes(query);
 const matchesCategory=activeCategory==="All"||tool.category===activeCategory;
-const matchesFavorites=!favoritesOnly||favorites.includes(tool.name);
-return matchesSearch&&matchesCategory&&matchesFavorites;
+const matchesFavorite=!favoritesOnly||favorites.includes(tool.name);
+return matchesSearch&&matchesCategory&&matchesFavorite;
 });
 
-grid.replaceChildren();
-count.textContent=filtered.length+" tools available";
-empty.style.display=filtered.length?"none":"block";
+const sort=$("sort").value;
+if(sort==="az")filtered.sort((a,b)=>a.name.localeCompare(b.name));
+if(sort==="za")filtered.sort((a,b)=>b.name.localeCompare(a.name));
 
-filtered.forEach(tool=>{
+$("count").textContent=filtered.length+" tools found";
+$("result-label").textContent=favoritesOnly?"Your favorite tools":activeCategory==="All"?"All available tools":activeCategory+" tools";
+
+const grid=$("tools-grid");
+grid.replaceChildren();
+
+if(!filtered.length){
+const empty=document.createElement("div");
+empty.className="empty";
+empty.textContent="No tools found. Try a different search or category.";
+grid.appendChild(empty);
+}
+
+const shown=filtered.slice(0,visibleCount);
+
+shown.forEach(tool=>{
 const card=document.createElement("article");
-card.className="card";
+card.className="tool-card";
 
 const top=document.createElement("div");
-top.className="card-top";
-const icon=document.createElement("div");
-icon.className="tool-icon";
-icon.textContent=tool.icon;
+top.className="tool-top";
+top.appendChild(logoElement(tool));
+
 const category=document.createElement("span");
 category.className="tool-category";
 category.textContent=tool.category;
-top.append(icon,category);
+top.appendChild(category);
 
 const title=document.createElement("h3");
 title.textContent=tool.name;
+
 const description=document.createElement("p");
 description.textContent=tool.description;
 
 const actions=document.createElement("div");
-actions.className="actions";
+actions.className="tool-actions";
 
 const details=document.createElement("button");
-details.className="details-btn";
+details.className="details";
 details.textContent="View Details";
 details.addEventListener("click",()=>openDetails(tool));
 
 const favorite=document.createElement("button");
-favorite.className="favorite-btn";
-const isFavorite=favorites.includes(tool.name);
-favorite.classList.toggle("active",isFavorite);
-favorite.textContent=isFavorite?"♥":"♡";
-favorite.setAttribute("aria-label",isFavorite?"Remove from favorites":"Add to favorites");
+favorite.className="favorite";
+favorite.textContent=favorites.includes(tool.name)?"♥":"♡";
+favorite.classList.toggle("active",favorites.includes(tool.name));
+favorite.setAttribute("aria-label","Toggle favorite");
 favorite.addEventListener("click",()=>{
 if(favorites.includes(tool.name)){
-favorites=favorites.filter(name=>name!==tool.name);
+favorites=favorites.filter(x=>x!==tool.name);
 }else{favorites.push(tool.name);}
 saveFavorites();
-renderTools();
+render();
 });
 
-actions.append(details,favorite);
+const visit=document.createElement("a");
+visit.className="visit";
+visit.href=tool.url;
+visit.target="_blank";
+visit.rel="noopener noreferrer";
+visit.textContent="Visit ↗";
 
-const link=document.createElement("a");
-link.className="visit";
-link.href=tool.url;
-link.target="_blank";
-link.rel="noopener noreferrer";
-link.textContent="Visit Website ↗";
-
-card.append(top,title,description,actions,link);
+actions.append(details,favorite,visit);
+card.append(top,title,description,actions);
 grid.appendChild(card);
 });
+
+$("load-more").classList.toggle("hidden",shown.length>=filtered.length);
 }
 
-document.getElementById("categories").addEventListener("click",event=>{
-const button=event.target.closest("button[data-category]");
-if(!button)return;
-activeCategory=button.dataset.category;
+$("search").addEventListener("input",()=>{
+visibleCount=12;
+render();
+});
+$("search-button").addEventListener("click",render);
+$("sort").addEventListener("change",render);
+
+$("categories").addEventListener("click",event=>{
+const btn=event.target.closest("[data-category]");
+if(!btn)return;
+activeCategory=btn.dataset.category;
 favoritesOnly=false;
-document.querySelectorAll(".category").forEach(item=>item.classList.toggle("active",item===button));
-document.getElementById("favorites-filter").classList.remove("active");
-renderTools();
+visibleCount=12;
+document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active",b===btn));
+$("favorites-filter").classList.remove("active");
+render();
 });
 
-document.getElementById("favorites-filter").addEventListener("click",()=>{
+$("favorites-filter").addEventListener("click",()=>{
 favoritesOnly=!favoritesOnly;
 activeCategory="All";
-document.querySelectorAll(".category[data-category]").forEach(item=>item.classList.toggle("active",item.dataset.category==="All"));
-document.getElementById("favorites-filter").classList.toggle("active",favoritesOnly);
-renderTools();
+visibleCount=12;
+document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active",b.dataset.category==="All"));
+$("favorites-filter").classList.toggle("active",favoritesOnly);
+render();
 });
 
-search.addEventListener("input",renderTools);
-document.getElementById("search-button").addEventListener("click",renderTools);
+document.querySelectorAll("[data-feature]").forEach(btn=>{
+btn.addEventListener("click",()=>{
+activeCategory=btn.dataset.feature;
+favoritesOnly=false;
+visibleCount=12;
+document.querySelectorAll("[data-category]").forEach(b=>b.classList.toggle("active",b.dataset.category===activeCategory));
+$("favorites-filter").classList.remove("active");
+render();
+$("explore").scrollIntoView({behavior:"smooth"});
+});
+});
 
-document.getElementById("close-modal").addEventListener("click",()=>modal.classList.remove("open"));
-modal.addEventListener("click",event=>{if(event.target===modal)modal.classList.remove("open");});
-document.addEventListener("keydown",event=>{if(event.key==="Escape")modal.classList.remove("open");});
+$("load-more").addEventListener("click",()=>{
+visibleCount+=12;
+render();
+});
 
-/* Save suggestions to Supabase */
-const form=document.getElementById("suggestion-form");
-const status=document.getElementById("form-status");
-const submitButton=document.getElementById("submit-button");
+$("close-modal").addEventListener("click",()=>$("tool-modal").classList.remove("open"));
+$("tool-modal").addEventListener("click",e=>{
+if(e.target===$("tool-modal"))$("tool-modal").classList.remove("open");
+});
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape")$("tool-modal").classList.remove("open");
+});
 
-form.addEventListener("submit",async event=>{
+/* Suggestion form */
+$("suggestion-form").addEventListener("submit",async event=>{
 event.preventDefault();
-status.textContent="";
-status.className="status";
 
-if(!form.reportValidity())return;
-
+const form=event.currentTarget;
+const status=$("form-status");
+const button=$("submit-button");
 const values=new FormData(form);
+
+if(values.get("website_check")){
+status.textContent="Submission could not be verified.";
+status.className="form-status error";
+return;
+}
+
 const name=String(values.get("tool_name")||"").trim();
 const category=String(values.get("category")||"").trim();
 const website=String(values.get("website_url")||"").trim();
 const description=String(values.get("description")||"").trim();
 const email=String(values.get("submitter_email")||"").trim();
 
-if(!name||!category||!website||!description)return;
-
-let parsedUrl;
+let parsed;
 try{
-parsedUrl=new URL(website);
-if(!["http:","https:"].includes(parsedUrl.protocol))throw new Error();
+parsed=new URL(website);
+if(!["http:","https:"].includes(parsed.protocol))throw new Error();
 }catch(e){
 status.textContent="Please enter a valid website URL.";
-status.classList.add("error");
+status.className="form-status error";
 return;
 }
 
-submitButton.disabled=true;
-submitButton.textContent="Submitting...";
+button.disabled=true;
+button.textContent="Submitting...";
 
 try{
-const {error}=await supabaseClient
-.from("tool_suggestions")
-.insert({
+const {error}=await db.from("tool_suggestions").insert({
 tool_name:name,
 category:category,
-website_url:parsedUrl.href,
+website_url:parsed.href,
 description:description,
 submitter_email:email||null,
 status:"pending"
@@ -419,22 +750,23 @@ status:"pending"
 
 if(error)throw error;
 
-status.textContent="Thank you! Your suggestion has been received and is awaiting review.";
-status.classList.add("success");
+status.textContent="Thank you! Your suggestion has been submitted for review.";
+status.className="form-status success";
 form.reset();
 
 }catch(error){
-console.error("Supabase submission error:",error);
-status.textContent="We couldn't save your suggestion. Please try again later or contact us.";
-status.classList.add("error");
+console.error(error);
+status.textContent="Unable to submit your suggestion. Please try again later.";
+status.className="form-status error";
 }finally{
-submitButton.disabled=false;
-submitButton.textContent="Submit Tool Suggestion ↗";
+button.disabled=false;
+button.textContent="Submit Your Suggestion ↗";
 }
 });
 
-renderTools();
+render();
 loadTools();
 </script>
+
 </body>
 </html>
